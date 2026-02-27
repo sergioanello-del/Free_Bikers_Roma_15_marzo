@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meteo Sperlonga - Responsive Dark</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --accent: #38bdf8;
+        }
+        body {
+            margin: 0;
+            padding: 10px;
+            background-color: transparent;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            color: white;
+        }
+
+        /* Container principale senza angoli stondati */
+        .weather-container {
+            position: relative;
+            background: #1e293b;
+            border-radius: 0; 
+            overflow: hidden;
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .content {
+            position: relative;
+            z-index: 10;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Animazione specifica per l'icona principale */
+        .main-weather-icon {
+            animation: float-icon 4s ease-in-out infinite;
+            filter: drop-shadow(0 0 15px rgba(56, 189, 248, 0.4));
+        }
+
+        @keyframes float-icon {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-10px) scale(1.05); }
+        }
+
+        /* Gestione Scroll Orizzontale per Mobile */
+        .forecast-container {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 5px;
+        }
+        
+        /* Nasconde la scrollbar per un look pulito */
+        .forecast-container::-webkit-scrollbar {
+            height: 4px;
+        }
+        .forecast-container::-webkit-scrollbar-thumb {
+            background: rgba(56, 189, 248, 0.3);
+            border-radius: 10px;
+        }
+
+        .forecast-grid {
+            display: flex;
+            gap: 10px;
+            min-width: 600px; /* Assicura che i giorni non si schiaccino */
+            margin-top: 5px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 15px;
+        }
+
+        /* Ripristina grid normale su desktop */
+        @media (min-width: 768px) {
+            .forecast-grid {
+                display: grid;
+                grid-template-columns: repeat(7, 1fr);
+                min-width: auto;
+            }
+        }
+
+        .forecast-day {
+            flex: 1;
+            text-align: center;
+            padding: 12px 8px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 0; /* Coerenza con il container principale */
+            transition: background 0.3s ease;
+        }
+
+        .temp-gradient {
+            background: linear-gradient(to bottom, #fff, #38bdf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Custom spacing per icone dettagli su mobile */
+        .details-box {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="weather-container">
+        <div class="content">
+            <!-- Parte Superiore: Layout flessibile -->
+            <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-6">
+                
+                <!-- Località e Data -->
+                <div class="location text-center md:text-left">
+                    <h1 class="text-2xl md:text-3xl font-bold tracking-tight">Sperlonga</h1>
+                    <p class="text-sky-400 font-medium flex items-center justify-center md:justify-start gap-2">
+                        <i class="fas fa-location-dot"></i> Latina, Lazio
+                    </p>
+                    <div id="current-date" class="text-[10px] md:text-xs opacity-60 mt-1 uppercase tracking-widest"></div>
+                </div>
+
+                <!-- Temperatura e Icona Animata -->
+                <div class="flex items-center justify-center gap-6 md:gap-8">
+                    <div class="text-right">
+                        <div class="text-5xl md:text-6xl font-light temp-gradient leading-none">19°</div>
+                        <p class="text-xs md:text-sm font-semibold opacity-80 uppercase mt-1">Poco Nuvoloso</p>
+                    </div>
+                    <i class="fas fa-cloud-sun-rain text-5xl md:text-6xl text-sky-300 main-weather-icon"></i>
+                </div>
+
+                <!-- Dettagli Tecnici -->
+                <div class="details-box bg-black/20 p-4 border border-white/5">
+                    <div class="text-center px-2">
+                        <i class="fas fa-wind text-sky-400 text-xs mb-1"></i>
+                        <p class="text-[10px] opacity-60 uppercase">Vento</p>
+                        <p class="text-xs md:text-sm font-bold">14 km/h</p>
+                    </div>
+                    <div class="text-center px-2 border-x border-white/10">
+                        <i class="fas fa-droplet text-sky-400 text-xs mb-1"></i>
+                        <p class="text-[10px] opacity-60 uppercase">Umidità</p>
+                        <p class="text-xs md:text-sm font-bold">72%</p>
+                    </div>
+                    <div class="text-center px-2">
+                        <i class="fas fa-sun text-yellow-400 text-xs mb-1"></i>
+                        <p class="text-[10px] opacity-60 uppercase">UV</p>
+                        <p class="text-xs md:text-sm font-bold">Basso</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sezione Previsioni con Scroll su Mobile -->
+            <div>
+                <h3 class="text-[10px] font-bold uppercase tracking-widest opacity-40 mb-3 ml-1">Previsioni 7 Giorni</h3>
+                <div class="forecast-container">
+                    <div class="forecast-grid" id="forecast-render">
+                        <!-- Generato via JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const giorni = ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'];
+        const icone = ['fa-sun', 'fa-cloud-sun', 'fa-cloud', 'fa-cloud-showers-heavy', 'fa-sun', 'fa-cloud-meatball', 'fa-bolt'];
+        const tempMax = [21, 20, 18, 17, 19, 22, 23];
+        const tempMin = [14, 13, 11, 10, 12, 14, 15];
+
+        function renderForecast() {
+            const container = document.getElementById('forecast-render');
+            const dateDisplay = document.getElementById('current-date');
+            const oggi = new Date();
+            
+            // Imposta data odierna locale
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            dateDisplay.innerText = oggi.toLocaleDateString('it-IT', options);
+
+            let html = '';
+            for (let i = 0; i < 7; i++) {
+                const dataFutura = new Date();
+                dataFutura.setDate(oggi.getDate() + i);
+                
+                const giornoSettimana = i === 0 ? 'Oggi' : giorni[dataFutura.getDay()];
+                const iconaMeteo = icone[i % icone.length];
+
+                html += `
+                    <div class="forecast-day">
+                        <div class="text-[9px] uppercase font-bold opacity-50 mb-2">${giornoSettimana}</div>
+                        <i class="fas ${iconaMeteo} text-lg my-2 text-sky-300"></i>
+                        <div class="text-xs md:text-sm font-bold">${tempMax[i]}°</div>
+                        <div class="text-[9px] opacity-40">${tempMin[i]}°</div>
+                    </div>
+                `;
+            }
+            container.innerHTML = html;
+        }
+
+        window.onload = renderForecast;
+    </script>
+</body>
+</html>

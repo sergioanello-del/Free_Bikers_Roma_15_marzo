@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Bikers Roma - Sperlonga e Villa di Tiberio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #f59e0b; /* Amber 500 */
+            --dark: #0a0a0a;
+            --card-bg: rgba(31, 41, 55, 0.7);
+        }
+
+        body {
+            background-color: var(--dark);
+            color: #e5e7eb;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #f59e0b; border-radius: 10px; }
+
+        .hero-section {
+            position: relative;
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background-color: #000;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.9)), 
+                              url('hero.jpg');
+            background-size: cover;
+            background-position: center;
+            z-index: 1;
+            animation: slowZoom 20s infinite alternate;
+        }
+
+        @keyframes slowZoom {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
+        }
+
+        .timeline-container {
+            position: relative;
+        }
+        .timeline-line {
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--primary), transparent);
+        }
+        @media (min-width: 768px) {
+            .timeline-line { left: 50%; transform: translateX(-50%); }
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 11px;
+            top: 12px;
+            width: 20px;
+            height: 20px;
+            background: var(--primary);
+            border-radius: 50%;
+            z-index: 10;
+            box-shadow: 0 0 15px var(--primary);
+        }
+        @media (min-width: 768px) {
+            .timeline-dot { left: 50%; transform: translateX(-50%); top: 10px; }
+        }
+
+        .moto-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-left: 4px solid var(--primary);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .moto-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px -10px rgba(245, 158, 11, 0.3);
+        }
+
+        /* Marquee Enhanced */
+        .marquee-container {
+            width: 100%;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 1.5rem 0;
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            scrollbar-width: none; /* Firefox */
+            cursor: grab;
+        }
+        .marquee-container::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+        .marquee-container:active { cursor: grabbing; }
+
+        .marquee-content {
+            display: flex;
+            width: max-content;
+            animation: marquee 30s linear infinite;
+        }
+
+        .marquee-container:hover .marquee-content {
+            animation-play-state: paused;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .gallery-item {
+            width: 280px;
+            height: 180px;
+            margin-right: 1rem;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            flex-shrink: 0;
+            border: 2px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            cursor: pointer;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Overlay Icon */
+        .zoom-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(245, 158, 11, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover .zoom-overlay {
+            opacity: 1;
+        }
+
+        .zoom-overlay i {
+            color: white;
+            font-size: 2rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        /* Lightbox Overlay */
+        #lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.95);
+            z-index: 100;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+
+        #lightbox.active { display: flex; }
+
+        #lightbox img {
+            max-width: 90%;
+            max-height: 80vh;
+            border-radius: 0.5rem;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+        }
+
+        .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--primary);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid var(--primary);
+        }
+
+        .nav-arrow:hover { background: var(--primary); color: black; }
+        .arrow-prev { left: 20px; }
+        .arrow-next { right: 20px; }
+
+        .close-lightbox {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.4s ease-out;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 800px;
+            padding: 1.5rem;
+        }
+
+        .accordion-item.active .chevron-icon {
+            transform: rotate(180deg);
+        }
+
+        .custom-shape-divider-bottom {
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            line-height: 0;
+            z-index: 5;
+        }
+
+        .custom-shape-divider-bottom svg {
+            display: block;
+            width: 100%;
+            height: 60px;
+            fill: var(--dark);
+        }
+
+        .map-btn {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--primary);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.75rem;            font-weight: bold;
+            margin-top: 10px;
+            border: 1px solid var(--primary);
+            transition: all 0.2s;
+        }
+        .map-btn:hover {
+            background: var(--primary);
+            color: black;
+        }
+    </style>
+
+
+
+
+<!-- inzio bottone evento concluso -->
+
+
+
+
+    <style>
+        /* Contenitore per il bottone */
+        .container-bottone {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        
+        }
+
+        /* Stile del Bottone (Dimensioni Ridotte) */
+        .btn-evento-concluso {
+            display: inline-block;
+            padding: 12px 25px; /* Padding ridotto */
+            font-family: 'Arial Black', Gadget, sans-serif;
+            font-size: 1.2rem; /* Font più piccolo */
+            font-weight: bold;
+            text-align: center;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: #ffffff;
+            background: linear-gradient(45deg, #ff0000, #990000);
+            border: 3px solid #ffffff; /* Bordo più sottile */
+            border-radius: 20px; /* Arrotondamento proporzionato */
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+            transition: transform 0.2s ease-in-out;
+            cursor: pointer;
+            
+            /* Animazione pulsante */
+            animation: pulsazione 1.5s infinite;
+        }
+
+        /* Effetto Hover */
+        .btn-evento-concluso:hover {
+            transform: scale(1.05);
+            color: #ffffff;
+            text-decoration: none;
+            background: linear-gradient(45deg, #b30000, #ff0000);
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+        }
+
+        /* Animazione */
+        @keyframes pulsazione {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 8px rgba(255, 0, 0, 0.5);
+            }
+            50% {
+                transform: scale(1.03);
+                box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+                background-color: #ff1a1a;
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 8px rgba(255, 0, 0, 0.5);
+            }
+        }
+
+        /* Responsive per cellulari molto piccoli */
+        @media (max-width: 480px) {
+            .btn-evento-concluso {
+                font-size: 1rem;
+                padding: 10px 20px;
+            }
+        }
+
+        /* Sezione ancora per il test */
+        .sezione-fotogallery {
+            height: 600px;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 50px;
+            border-top: 3px dashed #333;
+        }
+    </style>
+
+
+
+
+
+
+<!-- fine  bottone evento concluso  -->
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="fixed w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/5">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3 group cursor-pointer">
+                <img src="logo.png" alt="Logo" class="h-10 w-auto" onerror="this.src='https://placehold.co/100x100/f59e0b/black?text=FB'">
+                <span class="text-xl font-black uppercase italic text-white group-hover:text-amber-500 transition-colors">
+                    Free Bikers <span class="text-amber-500">Roma</span>
+                </span>
+            </div>
+            <nav class="hidden md:flex space-x-8 text-xs font-bold uppercase tracking-widest text-white/70">
+                <a href="#programma" class="hover:text-amber-500">Programma</a>
+                <a href="#storia" class="hover:text-amber-500">Storia</a>
+                <a href="#percorso" class="hover:text-amber-500">Mappa</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero-section">
+        <div class="hero-bg"></div>
+        <div class="relative z-10 container mx-auto px-4 text-center">
+            <div data-aos="fade-down">
+                <h2 class="text-amber-500 font-bold tracking-[0.3em] uppercase mb-4">Domenica 22 febbraio</h2>
+
+
+                <h1 class="text-6xl md:text-9xl font-black mb-8 text-white italic uppercase tracking-tighter leading-none">
+                    Sperlonga<br>Villa di Tiberio<br><span class="text-amber-500">Verso la storia</span>
+                </h1>
+            </div>
+
+			<!-- BOTTONE -->
+			<div class="container-bottone">
+				<a href="#fotogallery" class="btn-evento-concluso">
+					EVENTO CONCLUSO<br>GUARDA FOTO E VIDEO
+				</a>
+			</div>
+            <p class="text-lg md:text-2xl text-gray-300 mb-10 max-w-2xl mx-auto font-light" data-aos="fade-up">
+              L'Antro di Tiberio, Odissea di Marmo e Il "Lacus" centrale!
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4" data-aos="fade-up">
+                <a href="https://maps.app.goo.gl/kxeCyC99gRqGr7zN8" class="bg-amber-500 text-black px-10 py-4 rounded-full font-bold uppercase tracking-tighter hover:bg-amber-600 transition" target="_blank">il Percorso</a>
+				<a href="https://sergioanello-del.github.io/Calendario_2026_Free_Bikers_Roma/" class="border border-white/20 text-white px-10 py-4 rounded-full font-bold uppercase tracking-tighter hover:bg-white hover:text-black transition">Torna al Calendario 2026</a>
+            </div>
+        </div>
+        <div class="custom-shape-divider-bottom" style="display: none;">
+            <svg viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5,73.84-4.36,147.54,16.88,218.2,52.03C693.35,114.06,835.8,126,956,92c103.73-29.35,176.66-83.33,244-106.67V0Z"></path></svg>
+        </div>
+    </section>
+
+
+<!-- <div id="ww_4631a43184441" v='1.3' loc='id' a='{"t":"ticker","lang":"it","sl_lpl":1,"ids":["wl7998"],"font":"Arial","sl_ics":"one_a","sl_sot":"celsius","cl_bkg":"image","cl_font":"#FFFFFF","cl_cloud":"#FFFFFF","cl_persp":"#81D4FA","cl_sun":"#FFC107","cl_moon":"#FFC107","cl_thund":"#FF5722"}'>Altre previsioni: <a href="https://oneweather.org/it/rome/10_days/" id="ww_4631a43184441_u" target="_blank">Tempo roma 10 giorni</a></div><script async src="https://app3.weatherwidget.org/js/?id=ww_4631a43184441"></script> -->
+
+
+
+
+
+    <script>
+        (function() {
+            const giorni = ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'];
+            const icone = ['fa-sun', 'fa-cloud-sun', 'fa-cloud', 'fa-cloud-showers-heavy', 'fa-sun', 'fa-cloud-meatball', 'fa-bolt'];
+            const tempMax = [21, 20, 18, 17, 19, 22, 23];
+            const tempMin = [14, 13, 11, 10, 12, 14, 15];
+
+            function initWeather() {
+                const container = document.getElementById('sb-forecast-render');
+                const dateDisplay = document.getElementById('sb-current-date');
+                if (!container || !dateDisplay) return;
+
+                const oggi = new Date();
+                
+                // Data odierna in italiano
+                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                dateDisplay.innerText = oggi.toLocaleDateString('it-IT', options);
+
+                let html = '';
+                for (let i = 0; i < 7; i++) {
+                    const dataFutura = new Date();
+                    dataFutura.setDate(oggi.getDate() + i);
+                    
+                    const giornoSettimana = i === 0 ? 'Oggi' : giorni[dataFutura.getDay()];
+                    const iconaMeteo = icone[i % icone.length];
+
+                    html += `
+                        <div class="sb-forecast-day">
+                            <div class="text-[9px] uppercase font-bold opacity-50 mb-2 text-white">${giornoSettimana}</div>
+                            <i class="fas ${iconaMeteo} text-lg my-2 text-sky-300"></i>
+                            <div class="text-xs md:text-sm font-bold text-white">${tempMax[i]}°</div>
+                            <div class="text-[9px] opacity-40 text-white">${tempMin[i]}°</div>
+                        </div>
+                    `;
+                }
+                container.innerHTML = html;
+            }
+
+            // Avvio al caricamento
+            if (document.readyState === 'complete') {
+                initWeather();
+            } else {
+                window.addEventListener('load', initWeather);
+            }
+        })();
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- inizio photogallery -->
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<style>
+    :root {
+        --fbr-height: 250px;
+        --fbr-accent: #ff4500;
+        --fbr-accent-glow: rgba(255, 69, 0, 0.8);
+        --fbr-bg: #0a0a0a;
+        --fbr-card-bg: #1a1a1a;
+        --fbr-overlay-bg: rgba(0, 0, 0, 0.98);
+        --fbr-transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    /* Ottimizzazione contenitore principale */
+    #fbr-gallery-container {
+        width: 100%;
+        height: var(--fbr-height);
+        background-color: var(--fbr-bg);
+        background-image: radial-gradient(circle at 2px 2px, #222 1px, transparent 0);
+        background-size: 24px 24px;
+        overflow: hidden;
+        position: relative;
+        display: flex;
+        align-items: center;
+        border-top: 3px solid #111;
+        border-bottom: 3px solid #111;
+        cursor: grab;
+        user-select: none;
+        touch-action: pan-y;
+    }
+
+    #fbr-gallery-container:active { cursor: grabbing; }
+
+    /* Sfumature laterali dinamiche */
+    #fbr-gallery-container::before, #fbr-gallery-container::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        width: 15%;
+        max-width: 100px;
+        height: 100%;
+        z-index: 10;
+        pointer-events: none;
+    }
+    #fbr-gallery-container::before { left: 0; background: linear-gradient(to right, var(--fbr-bg), transparent); }
+    #fbr-gallery-container::after { right: 0; background: linear-gradient(to left, var(--fbr-bg), transparent); }
+
+    .fbr-track {
+        display: flex;
+        width: max-content;
+        will-change: transform;
+        padding: 10px 0;
+    }
+
+    /* --- ITEM DESIGN & HOVER EFFECTS --- */
+    .fbr-item {
+        height: calc(var(--fbr-height) - 40px);
+        width: 280px;
+        flex-shrink: 0;
+        margin: 0 10px;
+        position: relative;
+        overflow: hidden;
+        border-radius: 12px;
+        border: 2px solid #333;
+        background: var(--fbr-card-bg);
+        transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .fbr-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: brightness(0.9);
+        transition: transform 0.6s ease, filter 0.6s ease;
+    }
+
+    /* Icona Lente e Overlay Scurito */
+    .fbr-zoom-icon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.5);
+        color: white;
+        font-size: 2.5rem;
+        opacity: 0;
+        z-index: 5;
+        transition: all 0.4s ease;
+        text-shadow: 0 0 15px var(--fbr-accent-glow);
+    }
+
+    .fbr-item::after {
+        content: "";
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.6);
+        opacity: 0;
+        transition: opacity 0.4s ease;
+        z-index: 2;
+    }
+
+    /* Hover State (Solo desktop) */
+    @media (hover: hover) {
+        .fbr-item:hover {
+            transform: scale(1.1) translateY(-5px);
+            border-color: var(--fbr-accent);
+            box-shadow: 0 10px 30px rgba(255, 69, 0, 0.4);
+            z-index: 20;
+            cursor: pointer;
+        }
+        .fbr-item:hover img {
+            transform: scale(1.15);
+            filter: brightness(0.5) blur(1px);
+        }
+        .fbr-item:hover::after { opacity: 1; }
+        .fbr-item:hover .fbr-zoom-icon {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+    }
+
+    /* --- LIGHTBOX / OVERLAY --- */
+    #fbr-overlay {
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: var(--fbr-overlay-bg);
+        z-index: 99999;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.4s ease;
+        backdrop-filter: blur(15px);
+    }
+
+    #fbr-overlay.active { opacity: 1; pointer-events: all; }
+
+    .fbr-overlay-content {
+        position: relative;
+        width: 90%;
+        max-width: 1000px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #fbr-current-img {
+        max-width: 1o0%;
+        max-height: 75vh;
+        object-fit: contain;
+        border: 2px solid #444;
+        box-shadow: 0 0 50px rgba(0,0,0,0.9);
+        border-radius: 4px;
+    }
+
+    .fbr-caption {
+        color: #fff;
+        margin: 20px 0;
+        font-family: 'Segoe UI', sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-size: 0.8rem;
+    }
+
+    /* Navigazione Overlay */
+    .fbr-btn {
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+    .fbr-btn:hover { background: var(--fbr-accent); border-color: var(--fbr-accent); }
+
+    .fbr-close { position: absolute; top: -70px; right: 0; }
+
+    .fbr-nav-container {
+        display: flex;
+        gap: 40px;
+    }
+
+    /* --- RESPONSIVE MOBILE --- */
+    @media (max-width: 768px) {
+        :root { --fbr-height: 200px; }
+        .fbr-item { width: 160px; height: 160px; margin: 0 6px; border-width: 1px; }
+        #fotogallery { padding: 20px 10px !important; }
+        .fbr-btn { width: 50px; height: 50px; }
+        .fbr-close { top: -60px; }
+        #fbr-current-img { max-height: 60vh; }
+        
+        /* Su mobile, zoom discreto al tocco */
+        .fbr-item:active { transform: scale(1.05); }
+    }
+
+
+</style>
+
+<div id="fotogallery" style="padding: 40px 20px; text-align: center; color: white; font-family: 'Arial Black', sans-serif; background: #000;">
+    <h2 style="color: #ff4500; text-transform: uppercase; letter-spacing: 3px; margin: 0; font-size: 1.8rem; text-shadow: 0 0 10px rgba(255,69,0,0.3);">FBR Photo Stream</h2>
+    <p style="color: #888; font-size: 0.75rem; margin-top: 8px; font-weight: normal;">HOVER TO ZOOM • SWIPE TO EXPLORE</p>
+</div>
+
+<div id="fbr-gallery-container">
+    <div class="fbr-track" id="fbr-track"></div>
+</div>
+
+<div id="fbr-overlay">
+    <div class="fbr-overlay-content">
+        <button class="fbr-btn fbr-close" id="fbr-close-btn"><i class="fas fa-times"></i></button>
+        <img id="fbr-current-img" src="" alt="FBR">
+        <div class="fbr-caption" id="fbr-caption"></div>
+        <div class="fbr-nav-container">
+            <button class="fbr-btn fbr-prev" id="fbr-prev-btn"><i class="fas fa-arrow-left"></i></button>
+            <button class="fbr-btn fbr-next" id="fbr-next-btn"><i class="fas fa-arrow-right"></i></button>
+        </div>
+    </div>
+</div>
+
+<script>
+(function() {
+    const config = {
+        basePath: 'https://sergioanello-del.github.io/Free_Bikers_Roma_22_febbraio/Gallery/',
+        images: ["01.jpeg","02.jpeg","03.jpeg","04.jpeg","05.jpeg","06.jpeg","07.jpeg","08.jpeg","09.jpeg","10.jpeg","11.jpeg","12.jpeg","13.jpeg","14.jpeg","15.jpeg","16.jpeg","17.jpeg","18.jpeg","19.jpeg","20.jpeg","21.jpeg","22.jpeg","23.jpeg","24.jpeg","25.jpeg","26.jpeg","27.jpeg","28.jpeg","29.jpeg","30.jpeg","31.jpeg","32.jpeg","33.jpeg","34.jpeg","35.jpeg","36.jpeg","37.jpeg","38.jpeg"],
+        speed: 0.6 // Velocità rallentata (era 1.2)
+    };
+
+    const track = document.getElementById('fbr-track');
+    const container = document.getElementById('fbr-gallery-container');
+    const overlay = document.getElementById('fbr-overlay');
+    const imgElement = document.getElementById('fbr-current-img');
+    
+    let scrollPos = 0;
+    let trackWidth = 0;
+    let isDragging = false;
+    let isHovered = false;
+    let startX = 0;
+    let isClickPrevented = false;
+    let animationId;
+
+    // Rileva se è un dispositivo touch
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+    function init() {
+        const content = config.images.map((img, i) => `
+            <div class="fbr-item" data-index="${i}">
+                <i class="fas fa-search-plus fbr-zoom-icon"></i>
+                <img src="${config.basePath}${img}" loading="lazy" alt="FBR Photo">
+            </div>
+        `).join('');
+        
+        track.innerHTML = content + content + content;
+        
+        setTimeout(() => {
+            trackWidth = track.scrollWidth / 3;
+            scrollPos = -trackWidth;
+            updatePosition();
+            animate();
+        }, 800);
+
+        track.addEventListener('click', (e) => {
+            if (isClickPrevented) return;
+            const item = e.target.closest('.fbr-item');
+            if (item) openOverlay(parseInt(item.dataset.index));
+        });
+
+        // STOP ON HOVER (Solo se NON è un dispositivo touch)
+        if (!isTouchDevice) {
+            container.addEventListener('mouseenter', () => isHovered = true);
+            container.addEventListener('mouseleave', () => {
+                isHovered = false;
+                isDragging = false; 
+            });
+        }
+    }
+
+    function animate() {
+        // L'animazione continua se non si sta trascinando e (su desktop) se non c'è l'hover
+        if (!isDragging && !isHovered) {
+            scrollPos -= config.speed;
+            if (scrollPos <= -trackWidth * 2) scrollPos += trackWidth;
+            if (scrollPos > -trackWidth) scrollPos -= trackWidth;
+            updatePosition();
+        }
+        animationId = requestAnimationFrame(animate);
+    }
+
+    function updatePosition() {
+        track.style.transform = `translate3d(${scrollPos}px, 0, 0)`;
+    }
+
+    function handleStart(e) {
+        isDragging = true;
+        isClickPrevented = false;
+        startX = e.pageX || e.touches[0].pageX;
+    }
+
+    function handleMove(e) {
+        if (!isDragging) return;
+        const x = e.pageX || e.touches[0].pageX;
+        const walk = x - startX;
+        if (Math.abs(walk) > 10) isClickPrevented = true;
+        scrollPos += walk;
+        startX = x;
+        updatePosition();
+    }
+
+    container.addEventListener('mousedown', handleStart);
+    container.addEventListener('touchstart', handleStart, {passive: true});
+    window.addEventListener('mousemove', handleMove);
+    window.addEventListener('touchmove', handleMove, {passive: true});
+    window.addEventListener('mouseup', () => isDragging = false);
+    window.addEventListener('touchend', () => isDragging = false);
+
+    let currentIndex = 0;
+    function openOverlay(index) {
+        currentIndex = index;
+        showImage();
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function showImage() {
+        imgElement.style.opacity = '0';
+        const src = config.basePath + config.images[currentIndex];
+        imgElement.src = src;
+        document.getElementById('fbr-caption').innerText = `FBR GALLERY • ${currentIndex + 1} / ${config.images.length}`;
+        imgElement.onload = () => imgElement.style.opacity = '1';
+    }
+
+    document.getElementById('fbr-close-btn').onclick = () => {
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+    };
+
+    document.getElementById('fbr-next-btn').onclick = (e) => {
+        e.stopPropagation();
+        currentIndex = (currentIndex + 1) % config.images.length;
+        showImage();
+    };
+
+    document.getElementById('fbr-prev-btn').onclick = (e) => {
+        e.stopPropagation();
+        currentIndex = (currentIndex - 1 + config.images.length) % config.images.length;
+        showImage();
+    };
+
+    overlay.onclick = (e) => {
+        if (e.target === overlay) document.getElementById('fbr-close-btn').click();
+    };
+
+    init();
+})();
+</script>
+
+
+<!-- fine photogallery -->
+
+
+
+
+
+
+<!-- inizio video gallery -->
+
+
+
+<style>
+    :root {
+        --fb-primary: #ff0000;
+        --fb-text: #333;
+        --fb-bg-modal: rgba(0, 0, 0, 0.95);
+        --fb-transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .fb-video-section {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        padding: 40px 15px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .fb-gallery-title {
+        text-align: center;
+        color: var(--fb-text);
+        margin-bottom: 40px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: 900;
+        animation: fbFadeInDown 0.8s ease-out;
+    }
+
+    /* Grid System */
+    .fb-video-wall {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+    }
+
+    .fb-video-item {
+        position: relative;
+        border-radius: 12px;
+        overflow: hidden;
+        aspect-ratio: 16 / 9; /* Default per la griglia */
+        cursor: pointer;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        transition: var(--fb-transition);
+        background-color: #000;
+        animation: fbFadeInUp 0.6s forwards;
+    }
+
+    .fb-video-item:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 35px rgba(255, 0, 0, 0.25);
+    }
+
+    .fb-video-thumb {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.8;
+        transition: transform 0.6s ease;
+    }
+
+    .fb-video-item:hover .fb-video-thumb {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+
+    /* Play Button */
+    .fb-play-overlay {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.2);
+    }
+
+    .fb-play-icon {
+        width: 60px;
+        height: 60px;
+        background: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: var(--fb-transition);
+    }
+
+    .fb-video-item:hover .fb-play-icon {
+        background: var(--fb-primary);
+        transform: scale(1.1);
+    }
+
+    .fb-play-icon svg {
+        width: 30px;
+        fill: #000;
+        margin-left: 3px;
+    }
+
+    .fb-video-item:hover .fb-play-icon svg {
+        fill: #fff;
+    }
+
+    /* Modal Styling */
+    .fb-modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: var(--fb-bg-modal);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 99999;
+        backdrop-filter: blur(10px);
+        padding: 20px;
+
+    }
+
+    .fb-modal-overlay.active { display: flex; }
+
+    .fb-modal-content {
+        position: relative;
+        width: 100%;
+        /* Le dimensioni massime verranno gestite via JS in base al video */
+        background: #000;
+        border-radius: 8px;
+        box-shadow: 0 0 40px rgba(0,0,0,1);
+        transform: scale(0.8);
+        transition: var(--fb-transition);
+    }
+
+    .fb-modal-overlay.active .fb-modal-content { transform: scale(1); }
+
+    .fb-close-btn {
+        position: absolute;
+        top: -45px;
+        right: -10px;
+        color: #fff;
+        font-size: 40px;
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+
+    #fbPlayerContainer {
+        width: 100%;
+        height: 100%;
+        display: flex;
+    }
+
+    #fbPlayerContainer video, #fbPlayerContainer iframe {
+        width: 100%;
+        height: 100%;
+        aspect-ratio: inherit;
+    }
+
+    @keyframes fbFadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fbFadeInDown {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Mobile adjustments */
+    @media (max-width: 768px) {
+        .fb-close-btn {
+            top: -50px;
+            right: 0;
+        }
+        .fb-video-section { padding: 20px 10px; }
+    }
+
+
+</style>
+
+
+<style>
+/* Forza il contenitore della galleria a centrare tutto il contenuto */
+.video-gallery-container, .video-gallery {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    flex-direction: column; /* Mantiene il titolo sopra e il video sotto */
+    text-align: center;
+    width: 100%;
+}
+
+/* Forza l'elemento video/immagine a stare al centro */
+.video-gallery img, .video-gallery video, .video-item {
+    display: block !important;
+    margin: 0 auto !important; /* Centratura orizzontale classica */
+    max-width: 100%;
+}
+</style>
+
+
+<section class="fb-video-section" id="video-gallery">
+    <h2 class="fb-gallery-title">Video Gallery - Free Bikers Roma</h2>
+    
+    <div class="fb-video-wall video-gallery-container">
+        
+        <div class="fb-video-item" 
+             data-video-type="html5" 
+             data-video-url="https://sergioanello-del.github.io/Free_Bikers_Roma_22_febbraio/Video/Video01.mp4" 
+             data-width="300" 
+             data-height="600">
+            <img src="https://sergioanello-del.github.io/Free_Bikers_Roma_22_febbraio/Video/TN-video-01.png" alt="Video 1" class="fb-video-thumb">
+            <div class="fb-play-overlay">
+                <div class="fb-play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+            </div>
+            <div class="fb-video-info" style="position:absolute; bottom:10px; left:15px; color:#fff; font-weight:bold; text-shadow:1px 1px 3px #000;">On the Road</div>
+        </div>
+
+
+<!-- 
+        <div class="fb-video-item" 
+             data-video-type="html5" 
+             data-video-url="https://sergioanello-del.github.io/Free_Bikers_Roma_1_febbraio/VideoSermoneda/video02.mp4"
+             data-width="1280" 
+             data-height="720">
+            <img src="https://sergioanello-del.github.io/Free_Bikers_Roma_1_febbraio/VideoSermoneda/TN-video-02.jpg" alt="Video 2" class="fb-video-thumb">
+            <div class="fb-play-overlay">
+                <div class="fb-play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+            </div>
+            <div class="fb-video-info" style="position:absolute; bottom:10px; left:15px; color:#fff; font-weight:bold; text-shadow:1px 1px 3px #000;">Esposizione Presepe</div>
+        </div>
+
+        <div class="fb-video-item" 
+             data-video-type="html5" 
+             data-video-url="https://sergioanello-del.github.io/Free_Bikers_Roma_1_febbraio/VideoSermoneda/video04.mp4">
+            <img src="https://sergioanello-del.github.io/Free_Bikers_Roma_1_febbraio/VideoSermoneda/TN-video-04.jpg" alt="Video 4" class="fb-video-thumb">
+            <div class="fb-play-overlay">
+                <div class="fb-play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+            </div>
+            <div class="fb-video-info" style="position:absolute; bottom:10px; left:15px; color:#fff; font-weight:bold; text-shadow:1px 1px 3px #000;">Raduno</div>
+        </div> -->
+
+    </div>
+</section>
+
+<div class="fb-modal-overlay" id="fbVideoModal">
+    <div class="fb-modal-content" id="fbModalContent">
+        <button class="fb-close-btn" id="fbCloseModal">&times;</button>
+        <div id="fbPlayerContainer"></div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const modal = document.getElementById('fbVideoModal');
+        const modalContent = document.getElementById('fbModalContent');
+        const container = document.getElementById('fbPlayerContainer');
+        const closeBtn = document.getElementById('fbCloseModal');
+        const videoItems = document.querySelectorAll('.fb-video-item');
+
+        videoItems.forEach(item => {
+            item.addEventListener('click', function() {
+                const type = this.getAttribute('data-video-type');
+                const url = this.getAttribute('data-video-url');
+                const id = this.getAttribute('data-video-id');
+                
+                // Legge larghezza e altezza (default 16:9 se non specificati)
+                const vW = this.getAttribute('data-width') || 1280;
+                const vH = this.getAttribute('data-height') || 720;
+                const aspect = vW / vH;
+
+                // Applica le dimensioni al modal content
+                // Su desktop non supera i 1000px di larghezza o l'80% dell'altezza schermo
+                modalContent.style.maxWidth = vW + 'px';
+                modalContent.style.aspectRatio = aspect;
+
+                let playerHtml = '';
+                if (type === 'youtube') {
+                    playerHtml = `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1" allow="autoplay" allowfullscreen></iframe>`;
+                } else if (type === 'html5') {
+                    playerHtml = `<video controls autoplay playsinline><source src="${url}" type="video/mp4"></video>`;
+                }
+
+                container.innerHTML = playerHtml;
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        function closeModal() {
+            modal.classList.remove('active');
+            setTimeout(() => { container.innerHTML = ''; }, 400);
+            document.body.style.overflow = '';
+        }
+
+        closeBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
+        document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeModal(); });
+    });
+</script>
+
+
+
+
+<!-- fine video gallery -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div style="background-color:#000000;">
+<center>
+    <!-- Programma Ufficiale -->
+    <section id="programma" class="py-24 bg-black relative" style="width:70%">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-20" data-aos="fade-up">
+                <h3 class="text-amber-500 font-bold uppercase tracking-[0.4em] mb-2">Roadmap</h3>
+                <h2 class="text-5xl md:text-7xl font-black text-white italic uppercase tracking-tighter">Programma Ufficiale</h2>
+            </div>
+
+            <div class="timeline-container max-w-5xl mx-auto">
+                <div class="timeline-line"></div>
+
+                <!-- Punto 1 -->
+                <div class="timeline-item flex flex-col md:flex-row" data-aos="fade-right">
+                    <div class="timeline-dot"></div>
+                    <div class="pl-12 md:pl-0 md:w-1/2 md:pr-12 md:text-right mb-4 md:mb-0">
+                        <span class="text-amber-500 font-bold text-2xl italic">08:30</span>
+                    </div>
+                    <div class="pl-12 md:pl-12 md:w-1/2">
+                        <div class="moto-card p-6 rounded-2xl">
+                            <h4 class="text-white font-bold text-lg mb-1"><i class="fas fa-flag-checkered mr-2 text-amber-500"></i>Appuntamento</h4>
+                            <p class="text-gray-300">Presso la Caffetteria Barone, via Tiburtina 1412<br>INFO UTILI: Troverete anche un distributore IP dove poter eventualmente fare benzina</p>
+                            <a href="https://maps.app.goo.gl/af52PFdg7iUVfBGv9" target="_blank" class="map-btn">
+                                <i class="fas fa-location-arrow mr-2"></i> Vai Alla Caffetteria Barone
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Punto 2 -->
+                <div class="timeline-item flex flex-col md:flex-row" data-aos="fade-left">
+                    <div class="timeline-dot"></div>
+                    <div class="pl-12 md:pl-0 md:w-1/2 md:pr-12 md:text-right mb-4 md:mb-0 order-2 md:order-1">
+                        <div class="moto-card p-6 rounded-2xl">
+                            <h4 class="text-white font-bold text-lg mb-1"><i class="fa-solid fa-motorcycle mr-2 text-amber-500"></i>Partenza</h4>
+                            <p class="text-gray-300">A24 e A1 fino a Valmontone</p>
+                        </div>
+                    </div>
+                    <div class="pl-12 md:pl-12 md:w-1/2 order-1 md:order-2">
+                        <span class="text-amber-500 font-bold text-2xl italic">09:00</span>
+                    </div>
+                </div>
+
+                <!-- Punto 3 -->
+                <div class="timeline-item flex flex-col md:flex-row" data-aos="fade-right">
+                    <div class="timeline-dot"></div>
+                    <div class="pl-12 md:pl-0 md:w-1/2 md:pr-12 md:text-right mb-4 md:mb-0">
+                        <span class="text-amber-500 font-bold text-2xl italic">Sosta</span>
+                    </div>
+                    <div class="pl-12 md:pl-12 md:w-1/2">
+                        <div class="moto-card p-6 rounded-2xl">
+                            <h4 class="text-white font-bold text-lg mb-1"><i class="fas fa-coffee mr-2 text-amber-500"></i>Pausa Caffè</h4>
+                            <p class="text-gray-300">Sosta al bar Semprevisa a Carpineto Romano</p>
+                            <a href="https://maps.app.goo.gl/yrrAXCBJd3G8tnTTA" target="_blank" class="map-btn">
+                                <i class="fas fa-location-arrow mr-2"></i> Vai al Bar Semprevisa
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Punto 4 -->
+                <div class="timeline-item flex flex-col md:flex-row" data-aos="fade-left">
+                    <div class="timeline-dot"></div>
+                    <div class="pl-12 md:pl-0 md:w-1/2 md:pr-12 md:text-right mb-4 md:mb-0 order-2 md:order-1">
+                        <div class="moto-card p-6 rounded-2xl">
+                            <h4 class="text-white font-bold text-lg mb-1"><i class="fa-solid fa-building-columns mr-2 text-amber-500"></i>Sperlonga VILLA DI TIBERIO</h4>
+                            <p class="text-gray-300">Arrivati a Sperlonga visita alla "VILLA DI TIBERIO" Biglietto Ingresso 7.00€ p.p. </p>
+                        </div>
+                    </div>
+                    <div class="pl-12 md:pl-12 md:w-1/2 order-1 md:order-2">
+                        <span class="text-amber-500 font-bold text-2xl italic">Arrivo</span>
+                    </div>
+                </div>
+
+                <!-- Punto 5 -->
+                <div class="timeline-item flex flex-col md:flex-row" data-aos="fade-right">
+                    <div class="timeline-dot"></div>
+                    <div class="pl-12 md:pl-0 md:w-1/2 md:pr-12 md:text-right mb-4 md:mb-0">
+                        <span class="text-amber-500 font-bold text-2xl italic">12:00</span>
+                    </div>
+                    <div class="pl-12 md:pl-12 md:w-1/2">
+                        <div class="moto-card p-6 rounded-2xl">
+                            <h4 class="text-white font-bold text-lg mb-1"><i class="fa-solid fa-umbrella-beach mr-2 text-amber-500"></i>Spiaggia di Sant'Agostino</h4>
+                            <p class="text-gray-300">Terminata la visita in moto verso la Spiaggia di Sant'Agostino</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Punto 6 -->
+                <div class="timeline-item flex flex-col md:flex-row" data-aos="fade-left">
+                    <div class="timeline-dot"></div>
+                    <div class="pl-12 md:pl-0 md:w-1/2 md:pr-12 md:text-right mb-4 md:mb-0 order-2 md:order-1">
+                        <div class="moto-card p-6 rounded-2xl">
+                            <h4 class="text-white font-bold text-lg mb-1"><i class="fas fa-utensils mr-2 text-amber-500"></i>Pranzo</h4>
+                            <p class="text-gray-300">Al Ristorante da Guido (self - service).</p>
+                            <a href="https://maps.app.goo.gl/DoKS8QUMGJrm6GVu9" target="_blank" class="map-btn">
+                                <i class="fas fa-location-arrow mr-2"></i> Vai al Ristorante Da Guido
+                            </a>
+                        </div>
+                    </div>
+                    <div class="pl-12 md:pl-12 md:w-1/2 order-1 md:order-2">
+                        <span class="text-amber-500 font-bold text-2xl italic">Pranzo</span>
+                    </div>
+                </div>
+
+                <!-- Punto 7 -->
+                <div class="timeline-item flex flex-col md:flex-row" data-aos="fade-right">
+                    <div class="timeline-dot"></div>
+                    <div class="pl-12 md:pl-0 md:w-1/2 md:pr-12 md:text-right mb-4 md:mb-0">
+                        <span class="text-amber-500 font-bold text-2xl italic">Rientro</span>
+                    </div>
+                    <div class="pl-12 md:pl-12 md:w-1/2">
+                        <div class="moto-card p-6 rounded-2xl">
+                            <h4 class="text-white font-bold text-lg mb-1"><i class="fas fa-road mr-2 text-amber-500"></i>Rientro Libero</h4>
+                            <!-- <p class="text-gray-300">Rifornimento a Colleferro, ENI accanto al bar Marini.</p> -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Punto 8 -->
+                <!-- <div class="timeline-item flex flex-col md:flex-row" data-aos="fade-left">
+                    <div class="timeline-dot"></div>
+                    <div class="pl-12 md:pl-0 md:w-1/2 md:pr-12 md:text-right mb-4 md:mb-0 order-2 md:order-1">
+                        <div class="moto-card p-6 rounded-2xl">
+                            <h4 class="text-white font-bold text-lg mb-1"><i class="fas fa-road mr-2 text-amber-500"></i>Rientro</h4>
+                            <p class="text-gray-300">Possibilità di rientrare utilizzando l'autostrada A1 da Colleferro o Valmontone.</p>
+                        </div>
+                    </div>
+                    <div class="pl-12 md:pl-12 md:w-1/2 order-1 md:order-2">
+                        <span class="text-amber-500 font-bold text-2xl italic">Rientro</span>
+                    </div>
+                </div> -->
+
+            </div>
+        </div>
+    </section>
+</center>
+</div>
+
+
+
+    <!-- Storia & Leggenda -->
+    <section id="storia" class="py-24 bg-white/5 overflow-hidden" style="padding-bottom:0px;">
+        <div class="container mx-auto px-6">
+            
+            <div class="text-center mb-20" data-aos="fade-up">
+                <h3 class="text-amber-500 font-bold uppercase tracking-[0.4em] mb-2">Approfondimenti</h3>
+                <h2 class="text-5xl md:text-7xl font-black text-white italic uppercase tracking-tighter">Storia & Leggenda</h2>
+            </div>
+
+            <!-- SERMONETA -->
+            <div class="mb-32">
+                <div class="flex flex-col lg:flex-row gap-12 items-center mb-12">
+                    <div class="lg:w-1/2 space-y-6" data-aos="fade-right">
+                        <h3 class="text-4xl font-black text-white uppercase italic tracking-tighter border-l-4 border-amber-500 pl-4">La Villa di Tiberio: Tra Lusso e Mito</h3>
+                        <p class="text-gray-300 text-lg leading-relaxed">
+                           Situata in una posizione scenografica lungo la costa laziale, la Villa di Tiberio a Sperlonga rappresenta uno degli esempi più affascinanti di residenza imperiale romana. Edificata inizialmente in epoca tardo-repubblicana, la struttura fu ampliata e resa celebre dall'imperatore Tiberio nel I secolo d.C.
+
+                        </p>
+
+
+
+                        <div class="space-y-4 pt-4">
+                            <div class="accordion-item border border-white/10 rounded-xl overflow-hidden">
+                                <div class="accordion-header p-5 flex justify-between items-center bg-white/5 cursor-pointer" onclick="toggleAccordion(this)">
+                                    <span class="font-bold text-amber-500 uppercase text-sm tracking-widest italic">L'Antro di Tiberio</span>
+                                    <i class="fas fa-chevron-down chevron-icon text-amber-500"></i>
+                                </div>
+                                <div class="accordion-content">
+                                    <p class="text-gray-400 mb-3">Piscine per pesci (e per il gusto): La villa era dotata di un sofisticato sistema di peschiere (vasche per l'itticoltura) collegate direttamente al mare. Non servivano solo per bellezza: Tiberio, amante della buona tavola, le usava per allevare pesci pregiati da servire freschi durante i banchetti. Alcune di queste vasche sono ancora perfettamente visibili intorno alla grotta.</p>
+                                </div>
+                            </div>
+                            <div class="accordion-item border border-white/10 rounded-xl overflow-hidden">
+                                <div class="accordion-header p-5 flex justify-between items-center bg-white/5 cursor-pointer" onclick="toggleAccordion(this)">
+                                    <span class="font-bold text-amber-500 uppercase text-sm tracking-widest italic">Odissea di Marmo</span>
+                                    <i class="fas fa-chevron-down chevron-icon text-amber-500"></i>
+                                </div>
+                                <div class="accordion-content text-gray-400">
+                                    <p class="mb-3">La grotta era arredata con un ciclo di sculture monumentali che raccontavano i momenti chiave dell'Odissea. È considerato uno dei ritrovamenti archeologici più importanti del XX secolo perché dimostra che gli imperatori romani amavano circondarsi di "opere a tema" per identificarsi con gli eroi del mito (in questo caso, Ulisse).</p>
+                                </div>
+                            </div>
+                            <div class="accordion-item border border-white/10 rounded-xl overflow-hidden">
+                                <div class="accordion-header p-5 flex justify-between items-center bg-white/5 cursor-pointer" onclick="toggleAccordion(this)">
+                                    <span class="font-bold text-amber-500 uppercase text-sm tracking-widest italic">Il "Lacus" centrale</span>
+                                    <i class="fas fa-chevron-down chevron-icon text-amber-500"></i>
+                                </div>
+                                <div class="accordion-content text-gray-400">
+                                    <p class="mb-3">Al centro della grotta si trovava una vasca rettangolare che fungeva da sala da pranzo estiva. Al centro di questa vasca sorgeva un isolotto artificiale che ospitava il triclinio imperiale. Immagina la scena: cenare circondati dall'acqua, con il rumore delle onde e statue colossali che spuntano dall'oscurità della grotta.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:w-1/2" data-aos="fade-left">
+                        <div class="rounded-2xl overflow-hidden border-2 border-white/10 shadow-2xl">
+                            <img src="01.jpg" class="w-full h-[400px] object-cover" alt="Sermoneta">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="marquee-container" data-aos="fade-up">
+                    <div class="marquee-content gallery-list">
+                        <div class="gallery-item" onclick="openLightbox(this)"><img src="02.jpg" alt=""><div class="zoom-overlay"><i class="fas fa-search-plus"></i></div></div>
+                        <div class="gallery-item" onclick="openLightbox(this)"><img src="03.jpg" alt=""><div class="zoom-overlay"><i class="fas fa-search-plus"></i></div></div>
+                        <div class="gallery-item" onclick="openLightbox(this)"><img src="04.jpg" alt=""><div class="zoom-overlay"><i class="fas fa-search-plus"></i></div></div>
+                        <div class="gallery-item" onclick="openLightbox(this)"><img src="05.jpg" alt=""><div class="zoom-overlay"><i class="fas fa-search-plus"></i></div></div>
+                        <div class="gallery-item" onclick="openLightbox(this)"><img src="06.jpg" alt=""><div class="zoom-overlay"><i class="fas fa-search-plus"></i></div></div>
+                        <div class="gallery-item" onclick="openLightbox(this)"><img src="07.jpg" alt=""><div class="zoom-overlay"><i class="fas fa-search-plus"></i></div></div>
+                        <!-- Duplicated for infinite scroll -->
+                        <div class="gallery-item" onclick="openLightbox(this)"><img src="02.jpg" alt=""><div class="zoom-overlay"><i class="fas fa-search-plus"></i></div></div>
+					</div>
+                </div>
+            </div>
+
+
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div id="lightbox">
+        <span class="close-lightbox" onclick="closeLightbox()">&times;</span>
+        <div class="nav-arrow arrow-prev" onclick="changeImage(-1)"><i class="fas fa-chevron-left"></i></div>
+        <img id="lightbox-img" src="" alt="Zoom">
+        <div class="nav-arrow arrow-next" onclick="changeImage(1)"><i class="fas fa-chevron-right"></i></div>
+    </div>
+
+    <!-- Percorso -->
+    <section id="percorso" class="py-24 container mx-auto px-6">
+        <div class="text-center mb-12">
+            <h2 class="text-4xl font-black text-white italic uppercase tracking-tighter">La Mappa del Percorso</h2>
+        </div>
+        <div class="rounded-3xl overflow-hidden border border-white/10 shadow-2xl h-[500px]" data-aos="zoom-in">
+            <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m44!1m8!1m3!1d382497.5662851724!2d12.9564345!3d41.4985917!3m2!1i1024!2i768!4f13.1!4m33!3e0!4m5!1s0x132f7b005e85ac61%3A0x2c3eb903325e92e!2sCaffetteria%20Bistrot%20Barone%2C%20Via%20Tiburtina%2C%201412%2C%2000131%20Roma%20RM!3m2!1d41.938705299999995!2d12.628468199999999!4m3!3m2!1d41.9233091!2d12.6414724!4m3!3m2!1d41.7624265!2d12.9729187!4m5!1s0x1325692a84e48743%3A0x4bfb2f2bf474481e!2sCarpineto%20Romano%2C%2000032%20RM!3m2!1d41.6046918!2d13.0853108!4m5!1s0x13253d4d1574e75b%3A0xa4d62be6facb318d!2sTERRACINA%20%7C%20Via%20Appia%20Via%20Abbazia%20Fossanova%20%23%20f2970%2C%2004019%20Terracina%20LT!3m2!1d41.3190028!2d13.1871795!4m5!1s0x13252e7f6aa25ea3%3A0x382a3c337e19e5b1!2sParco%20archeologico%20della%20Villa%20di%20Tiberio%20e%20Museo%20archeologico%20Nazionale%20-%20Sperlonga%2C%20Via%20Flacca%2C%20km%2016%2F600%2C%2004029%20Sperlonga%20LT!3m2!1d41.2508619!2d13.449691699999999!5e0!3m2!1sit!2sit!4v1771174672034!5m2!1sit!2sit" 
+                width="100%" height="100%" style="border:0; filter: invert(90%) hue-rotate(180deg) brightness(95%);" allowfullscreen="" loading="lazy">
+            </iframe>
+        </div>
+        <div class="mt-8 text-center">
+             <a href="https://maps.app.goo.gl/kxeCyC99gRqGr7zN8" target="_blank" class="text-amber-500 font-bold underline hover:text-white transition">Apri percorso completo su Google Maps</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 bg-black border-t border-white/5 text-center">
+		 <center><img src="logo.png" alt="Logo" class="h-11 w-auto" onerror="this.src='https://placehold.co/100x100/f59e0b/black?text=FB'" style="height: 135px;"></center>
+        <div class="container mx-auto px-6">
+            <p class="text-amber-500 font-black uppercase italic text-2xl mb-4">Free Bikers Roma</p>
+            <p class="text-gray-500 text-xs tracking-[0.4em]">© 2026 • Corri Libero • Roma Chapter</p>
+        </div>
+    </footer>
+
+    <script>
+        AOS.init({ duration: 800, once: true });
+
+        function toggleAccordion(element) {
+            const item = element.parentElement;
+            const isActive = item.classList.contains('active');
+            
+            // Close all others
+            document.querySelectorAll('.accordion-item').forEach(i => i.classList.remove('active'));
+
+            if (!isActive) {
+                item.classList.add('active');
+            }
+        }
+
+        // Logic for Draggable and Navigable Gallery
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+        const containers = document.querySelectorAll('.marquee-container');
+
+        containers.forEach(container => {
+            container.addEventListener('mousedown', (e) => {
+                isDown = true;
+                container.classList.add('active');
+                startX = e.pageX - container.offsetLeft;
+                scrollLeft = container.scrollLeft;
+            });
+            container.addEventListener('mouseleave', () => {
+                isDown = false;
+            });
+            container.addEventListener('mouseup', () => {
+                isDown = false;
+            });
+            container.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - container.offsetLeft;
+                const walk = (x - startX) * 2; // Scroll speed
+                container.scrollLeft = scrollLeft - walk;
+            });
+        });
+
+        // Lightbox Logic
+        let currentGalleryItems = [];
+        let currentIndex = 0;
+
+        function openLightbox(element) {
+            const galleryList = element.closest('.gallery-list');
+            currentGalleryItems = Array.from(galleryList.querySelectorAll('img')).map(img => img.src);
+            // Deduplicate for logic if necessary, or just use as is
+            currentIndex = Array.from(galleryList.querySelectorAll('.gallery-item')).indexOf(element);
+            
+            updateLightboxImage();
+            document.getElementById('lightbox').classList.add('active');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
+
+        function changeImage(step) {
+            currentIndex += step;
+            if (currentIndex >= currentGalleryItems.length) currentIndex = 0;
+            if (currentIndex < 0) currentIndex = currentGalleryItems.length - 1;
+            updateLightboxImage();
+        }
+
+        function updateLightboxImage() {
+            const img = document.getElementById('lightbox-img');
+            img.src = currentGalleryItems[currentIndex];
+        }
+
+        // Close on background click
+        document.getElementById('lightbox').addEventListener('click', function(e) {
+            if (e.target === this) closeLightbox();
+        });
+
+    </script>
+</body>
+</html>

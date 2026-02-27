@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Bikers Roma - Sperlonga e Villa di Tiberio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #f59e0b; /* Amber 500 */
+            --dark: #0a0a0a;
+            --card-bg: rgba(31, 41, 55, 0.7);
+        }
+
+        body {
+            background-color: var(--dark);
+            color: #e5e7eb;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #f59e0b; border-radius: 10px; }
+
+        .hero-section {
+            position: relative;
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background-color: #000;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.9)), 
+                              url('FotoPagina/hero.jpg');
+            background-size: cover;
+            background-position: center;
+            z-index: 1;
+            animation: slowZoom 20s infinite alternate;
+        }
+
+        @keyframes slowZoom {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
+        }
+
+        .timeline-container {
+            position: relative;
+        }
+        .timeline-line {
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--primary), transparent);
+        }
+        @media (min-width: 768px) {
+            .timeline-line { left: 50%; transform: translateX(-50%); }
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 11px;
+            top: 12px;
+            width: 20px;
+            height: 20px;
+            background: var(--primary);
+            border-radius: 50%;
+            z-index: 10;
+            box-shadow: 0 0 15px var(--primary);
+        }
+        @media (min-width: 768px) {
+            .timeline-dot { left: 50%; transform: translateX(-50%); top: 10px; }
+        }
+
+        .moto-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-left: 4px solid var(--primary);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .moto-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px -10px rgba(245, 158, 11, 0.3);
+        }
+
+        /* Marquee Enhanced */
+        .marquee-container {
+            width: 100%;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 1.5rem 0;
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            scrollbar-width: none; /* Firefox */
+            cursor: grab;
+        }
+        .marquee-container::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+        .marquee-container:active { cursor: grabbing; }
+
+        .marquee-content {
+            display: flex;
+            width: max-content;
+            animation: marquee 30s linear infinite;
+        }
+
+        .marquee-container:hover .marquee-content {
+            animation-play-state: paused;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .gallery-item {
+            width: 280px;
+            height: 180px;
+            margin-right: 1rem;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            flex-shrink: 0;
+            border: 2px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            cursor: pointer;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Overlay Icon */
+        .zoom-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(245, 158, 11, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover .zoom-overlay {
+            opacity: 1;
+        }
+
+        .zoom-overlay i {
+            color: white;
+            font-size: 2rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        /* Lightbox Overlay */
+        #lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.95);
+            z-index: 100;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+
+        #lightbox.active { display: flex; }
+
+        #lightbox img {
+            max-width: 90%;
+            max-height: 80vh;
+            border-radius: 0.5rem;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+        }
+
+        .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--primary);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid var(--primary);
+        }
+
+        .nav-arrow:hover { background: var(--primary); color: black; }
+        .arrow-prev { left: 20px; }
+        .arrow-next { right: 20px; }
+
+        .close-lightbox {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.4s ease-out;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 800px;
+            padding: 1.5rem;
+        }
+
+        .accordion-item.active .chevron-icon {
+            transform: rotate(180deg);
+        }
+
+        .custom-shape-divider-bottom {
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            line-height: 0;
+            z-index: 5;
+        }
+
+        .custom-shape-divider-bottom svg {
+            display: block;
+            width: 100%;
+            height: 60px;
+            fill: var(--dark);
+        }
+
+        .map-btn {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--primary);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.75rem;            font-weight: bold;
+            margin-top: 10px;
+            border: 1px solid var(--primary);
+            transition: all 0.2s;
+        }
+        .map-btn:hover {
+            background: var(--primary);
+            color: black;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="fixed w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/5">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3 group cursor-pointer">
+                <img src="logo.png" alt="Logo" class="h-10 w-auto" onerror="this.src='https://placehold.co/100x100/f59e0b/black?text=FB'">
+                <span class="text-xl font-black uppercase italic text-white group-hover:text-amber-500 transition-colors">
+                    Free Bikers <span class="text-amber-500">Roma</span>
+                </span>
+            </div>
+            <nav class="hidden md:flex space-x-8 text-xs font-bold uppercase tracking-widest text-white/70">
+                <a href="#programma" class="hover:text-amber-500">Programma</a>
+                <a href="#storia" class="hover:text-amber-500">Storia</a>
+                <a href="#percorso" class="hover:text-amber-500">Mappa</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero-section">
+        <div class="hero-bg"></div>
+        <div class="relative z-10 container mx-auto px-4 text-center">
+            <div data-aos="fade-down">
+                <h2 class="text-amber-500 font-bold tracking-[0.3em] uppercase mb-4">Domenica 15 Marzo</h2>
+                <h1 class="text-6xl md:text-9xl font-black mb-8 text-white italic uppercase tracking-tighter leading-none">
+                    Sant'Oreste: <br><span class="text-amber-500"> Bunker</span> Soratte
+                </h1>
+            </div>
+            <p class="text-lg md:text-2xl text-gray-300 mb-10 max-w-2xl mx-auto font-light" data-aos="fade-up">
+              Tra storia e Leggenda
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4" data-aos="fade-up">
+                <a href="https://maps.app.goo.gl/wRKxDJtgrdqeYFPX7"  class="bg-amber-500 text-black px-10 py-4 rounded-full font-bold uppercase tracking-tighter hover:bg-amber-600 transition" target="_blank">il Percorso</a>
+				<a href="https://sergioanello-del.github.io/Calendario_2026_Free_Bikers_Roma/" class="border border-white/20 text-white px-10 py-4 rounded-full font-bold uppercase tracking-tighter hover:bg-white hover:text-black transition">Torna al Calendario 2026</a>
+            </div>
+        </div>
+        <div class="custom-shape-divider-bottom" style="display: none;">
+            <svg viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5,73.84-4.36,147.54,16.88,218.2,52.03C693.35,114.06,835.8,126,956,92c103.73-29.35,176.66-83.33,244-106.67V0Z"></path></svg>
+        </div>
+    </section>
+
+
+<!-- <div id="ww_4631a43184441" v='1.3' loc='id' a='{"t":"ticker","lang":"it","sl_lpl":1,"ids":["wl7998"],"font":"Arial","sl_ics":"one_a","sl_sot":"celsius","cl_bkg":"image","cl_font":"#FFFFFF","cl_cloud":"#FFFFFF","cl_persp":"#81D4FA","cl_sun":"#FFC107","cl_moon":"#FFC107","cl_thund":"#FF5722"}'>Altre previsioni: <a href="https://oneweather.org/it/rome/10_days/" id="ww_4631a43184441_u" target="_blank">Tempo roma 10 giorni</a></div><script async src="https://app3.weatherwidget.org/js/?id=ww_4631a43184441"></script> -->
+
+
+
+
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        #sb-weather-widget {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border-radius: 0rem;
+            padding: 2rem;
+            font-family: ui-sans-serif, system-ui, sans-serif;
+            /* Rimosso max-width per estendersi su tutta la larghezza */
+            width: 100%;
+            margin: 0;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+            box-sizing: border-box;
+        }
+        .sb-temp-gradient {
+            background: linear-gradient(to bottom, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+        .sb-details-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 1rem;
+        }
+        .sb-forecast-scroll {
+            overflow-x: auto;
+            padding-bottom: 1rem;
+            -webkit-overflow-scrolling: touch;
+        }
+        .sb-forecast-grid {
+            display: flex;
+            gap: 1rem;
+            /* Permette agli elementi di distribuirsi se c'è spazio, altrimenti scrolla */
+            justify-content: b;
+        }
+        .sb-forecast-day {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 1.25rem;
+            border-radius: 0.75rem;
+            text-align: center;
+            flex: 1; /* Gli elementi crescono equamente */
+            min-width: 100px; /* Impedisce che diventino troppo piccoli su mobile */
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: background 0.3s ease;
+        }
+        .sb-forecast-day:hover {
+            background: rgba(255, 255, 255, 0.07);
+        }
+        /* Scrollbar personalizzata */
+        .sb-forecast-scroll::-webkit-scrollbar { height: 6px; }
+        .sb-forecast-scroll::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
+        .sb-forecast-scroll::-webkit-scrollbar-thumb { background: rgba(56, 189, 248, 0.3); border-radius: 10px; }
+    </style>
+
+
+    <div id="sb-weather-widget">
+        <div class="sb-content max-w-7xl mx-auto"> <!-- Container interno per mantenere il contenuto centrato su schermi ultra-wide se desiderato, o rimuovi max-w-7xl per full stretch assoluto -->
+            <!-- Header -->
+            <div class="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-8 mb-10">
+                <!-- Info Località -->
+                <div class="text-center lg:text-left">
+                    <h1 id="city-name" class="text-3xl md:text-4xl font-bold tracking-tight text-white m-0">Caricamento...</h1>
+                    <p id="city-region" class="text-sky-400 font-medium flex items-center justify-center lg:justify-start gap-2 text-base mt-2">
+                        <i class="fas fa-location-dot"></i> --
+                    </p>
+                    <div id="sb-current-date" class="text-xs md:text-sm opacity-60 mt-2 uppercase tracking-widest text-white"></div>
+                </div>
+
+                <!-- Temperatura e Icona Principale -->
+                <div class="flex items-center justify-center gap-8 md:gap-12">
+                    <div class="text-right">
+                        <div id="current-temp" class="text-6xl md:text-7xl sb-temp-gradient leading-none">--°</div>
+                        <p id="weather-desc" class="text-xs md:text-sm font-semibold opacity-80 uppercase mt-3 text-white tracking-wider">--</p>
+                    </div>
+                    <i id="main-icon" class="fas fa-cloud text-6xl md:text-7xl text-sky-300"></i>
+                </div>
+
+                <!-- Box Dettagli -->
+                <div class="sb-details-grid w-full lg:w-auto lg:min-w-[400px]">
+                    <div class="text-center">
+                        <i class="fas fa-wind text-sky-400 text-sm mb-2"></i>
+                        <p class="text-[10px] opacity-60 uppercase text-white mb-1">Vento</p>
+                        <p id="wind-speed" class="text-sm md:text-base font-bold text-white">-- km/h</p>
+                    </div>
+                    <div class="text-center border-x border-white/10">
+                        <i class="fas fa-droplet text-sky-400 text-sm mb-2"></i>
+                        <p class="text-[10px] opacity-60 uppercase text-white mb-1">Umidità</p>
+                        <p id="humidity" class="text-sm md:text-base font-bold text-white">--%</p>
+                    </div>
+                    <div class="text-center">
+                        <i class="fas fa-eye text-yellow-400 text-sm mb-2"></i>
+                        <p class="text-[10px] opacity-60 uppercase text-white mb-1">Visibilità</p>
+                        <p id="visibility" class="text-sm md:text-base font-bold text-white">-- km</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Previsioni -->
+            <div class="mt-8">
+                <div class="flex items-center justify-between mb-4 px-1">
+                    <h3 class="text-xs font-bold uppercase tracking-widest opacity-40 text-white">Previsioni 7 Giorni</h3>
+                    <span class="text-[10px] text-sky-400 opacity-60 italic">Scorri per vedere altri giorni →</span>
+                </div>
+                <div class="sb-forecast-scroll">
+                    <div class="sb-forecast-grid" id="sb-forecast-render">
+                        <!-- Popolato da JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            /**
+             * CONFIGURAZIONE LOCALITÀ
+             * Modifica questi parametri per cambiare città
+             */
+            const CONFIG = {
+                lat: 42.2355, // Latitudine Sant'Oreste
+                lon: 12.5165, // Longitudine Sant'Oreste
+                nomeCitta: "Bunker Soratte",
+                regione: "Sant'Oreste, Lazio"
+            };
+
+            const weatherMap = {
+                0: { desc: 'Sereno', icon: 'fa-sun' },
+                1: { desc: 'Preval. Sereno', icon: 'fa-cloud-sun' },
+                2: { desc: 'Poco Nuvoloso', icon: 'fa-cloud-sun' },
+                3: { desc: 'Nuvoloso', icon: 'fa-cloud' },
+                45: { desc: 'Nebbia', icon: 'fa-smog' },
+                48: { desc: 'Nebbia brinosa', icon: 'fa-smog' },
+                51: { desc: 'Pioggerellina', icon: 'fa-cloud-rain' },
+                61: { desc: 'Pioggia leggera', icon: 'fa-cloud-rain' },
+                63: { desc: 'Pioggia', icon: 'fa-cloud-showers-heavy' },
+                71: { desc: 'Neve leggera', icon: 'fa-snowflake' },
+                80: { desc: 'Rovesci di pioggia', icon: 'fa-cloud-showers-water' },
+                95: { desc: 'Temporale', icon: 'fa-bolt' }
+            };
+
+            async function fetchWeather() {
+                try {
+                    const url = `https://api.open-meteo.com/v1/forecast?latitude=${CONFIG.lat}&longitude=${CONFIG.lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m,visibility&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=Europe%2FRome`;
+                    
+                    const response = await fetch(url);
+                    const data = await response.json();
+                    updateUI(data);
+                } catch (error) {
+                    console.error("Errore recupero meteo:", error);
+                    document.getElementById('city-name').innerText = "Errore Caricamento";
+                }
+            }
+
+            function updateUI(data) {
+                document.getElementById('city-name').innerText = CONFIG.nomeCitta;
+                document.getElementById('city-region').innerHTML = `<i class="fas fa-location-dot"></i> ${CONFIG.regione}`;
+                
+                const current = data.current;
+                const weather = weatherMap[current.weather_code] || { desc: 'N.D.', icon: 'fa-cloud' };
+
+                document.getElementById('current-temp').innerText = Math.round(current.temperature_2m) + '°';
+                document.getElementById('weather-desc').innerText = weather.desc;
+                document.getElementById('main-icon').className = `fas ${weather.icon} text-6xl md:text-7xl text-sky-300`;
+                document.getElementById('wind-speed').innerText = current.wind_speed_10m + ' km/h';
+                document.getElementById('humidity').innerText = current.relative_humidity_2m + '%';
+                document.getElementById('visibility').innerText = (current.visibility / 1000).toFixed(1) + ' km';
+
+                const oggi = new Date();
+                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                document.getElementById('sb-current-date').innerText = oggi.toLocaleDateString('it-IT', options);
+
+                const forecastContainer = document.getElementById('sb-forecast-render');
+                let html = '';
+                const giorni = ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'];
+
+                for (let i = 0; i < 7; i++) {
+                    const date = new Date();
+                    date.setDate(date.getDate() + i);
+                    const dayName = i === 0 ? 'Oggi' : giorni[date.getDay()];
+                    const dayCode = data.daily.weather_code[i];
+                    const dayWeather = weatherMap[dayCode] || { icon: 'fa-cloud' };
+
+                    html += `
+                        <div class="sb-forecast-day">
+                            <div class="text-[10px] uppercase font-bold opacity-50 mb-3 text-white">${dayName}</div>
+                            <i class="fas ${dayWeather.icon} text-xl my-3 text-sky-300"></i>
+                            <div class="text-sm md:text-lg font-bold text-white">${Math.round(data.daily.temperature_2m_max[i])}°</div>
+                            <div class="text-[10px] opacity-40 text-white">${Math.round(data.daily.temperature_2m_min[i])}°</div>
+                        </div>
+                    `;
+                }
+                forecastContainer.innerHTML = html;
+            }
+
+            fetchWeather();
+            setInterval(fetchWeather, 30 * 60 * 1000);
+        })();
+    </script>
+
+
+
+
+
+    <!-- Info Box Bunker -->
+    <section class="py-12 bg-black relative">
+        <div class="container mx-auto px-6 max-w-7xl">
+            <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 md:p-8 shadow-2xl relative overflow-hidden" data-aos="fade-up">
+                <div class="absolute top-0 left-0 w-2 h-full bg-sky-500"></div>
+                <div class="flex flex-col md:flex-row items-start md:items-center gap-6">
+                    <div class="bg-sky-500/10 p-4 rounded-full flex-shrink-0">
+                        <i class="fas fa-info-circle text-sky-400 text-3xl"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-xl md:text-2xl font-bold text-white mb-2">Informazioni Visita Guidata</h3>
+                        <p class="text-gray-300 text-base leading-relaxed">
+                            Dopo il caffè passeggiata fino alla biglietteria del Bunker Soratte dove alle ore <strong class="text-white">14.00</strong> è stata prenotata la visita guidata, al costo di <strong class="text-white">12€ + 10€</strong> per il trenino (2.5 km di tunnel).
+                        </p>
+                        <div class="mt-4 flex items-start gap-3 bg-sky-950/30 p-4 rounded-lg border border-sky-900/50">
+                            <i class="fas fa-exclamation-circle text-sky-400 mt-1"></i>
+                            <p class="text-sm text-gray-300 leading-relaxed">
+                                Come da indicazioni ricevute dalla direzione del Bunker, i biglietti dovranno essere acquistati tramite bonifico.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <!-- Programma Ufficiale -->
+    <section id="programma" class="py-24 bg-black relative">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-20" data-aos="fade-up">
+                <h3 class="text-amber-500 font-bold uppercase tracking-[0.4em] mb-2">Roadmap</h3>
+                <h2 class="text-5xl md:text-7xl font-black text-white italic uppercase tracking-tighter">Programma Ufficiale</h2>
+            </div>
+
+            <div class="timeline-container max-w-5xl mx-auto">
+                <div class="timeline-line"></div>
+
+                <!-- Punto 1 -->
+                <div class="timeline-item flex flex-col md:flex-row" data-aos="fade-right">
+                    <div class="timeline-dot"></div>
+                    <div class="pl-12 md:pl-0 md:w-1/2 md:pr-12 md:text-right mb-4 md:mb-0">
+                        <span class="text-amber-500 font-bold text-2xl italic">09:00</span>
+                    </div>
+                    <div class="pl-12 md:pl-12 md:w-1/2">
+                        <div class="moto-card p-6 rounded-2xl">
+                            <h4 class="text-white font-bold text-lg mb-1"><i class="fas fa-flag-checkered mr-2 text-amber-500"></i>Appuntamento</h4>
+                            <p class="text-gray-300">Presso il Bar Pasticceria Fratelli Silvestrini in via Salaria 1446 Settebagni</p>
+                            <a href="https://maps.app.goo.gl/Ziq5u5ipATdCn9mv6" target="_blank" class="map-btn">
+                                <i class="fas fa-location-arrow mr-2"></i> Vai Al Bar Pasticceria Fratelli Silvestrini
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Punto 2 -->
+                <div class="timeline-item flex flex-col md:flex-row" data-aos="fade-left">
+                    <div class="timeline-dot"></div>
+                    <div class="pl-12 md:pl-0 md:w-1/2 md:pr-12 md:text-right mb-4 md:mb-0 order-2 md:order-1">
+                        <div class="moto-card p-6 rounded-2xl">
+                            <h4 class="text-white font-bold text-lg mb-1"><i class="fa-solid fa-motorcycle mr-2 text-amber-500"></i>Partenza</h4>
+                            <p class="text-gray-300">Partenza con pieno carburante</p>
+                        </div>
+                    </div>
+                    <div class="pl-12 md:pl-12 md:w-1/2 order-1 md:order-2">
+                        <span class="text-amber-500 font-bold text-2xl italic">09.30/45</span>
+                    </div>
+                </div>
+
+                <!-- Punto 3 -->
+                <div class="timeline-item flex flex-col md:flex-row" data-aos="fade-right">
+                    <div class="timeline-dot"></div>
+                    <div class="pl-12 md:pl-0 md:w-1/2 md:pr-12 md:text-right mb-4 md:mb-0">
+                        <span class="text-amber-500 font-bold text-2xl italic">Sosta</span>
+                    </div>
+                    <div class="pl-12 md:pl-12 md:w-1/2">
+                        <div class="moto-card p-6 rounded-2xl">
+                            <h4 class="text-white font-bold text-lg mb-1"><i class="fas fa-coffee mr-2 text-amber-500"></i>Pausa Caffè</h4>
+                            <p class="text-gray-300">Sosta al bar Semprevisa a Carpineto Romano</p>
+                            <a href="https://maps.app.goo.gl/yrrAXCBJd3G8tnTTA" target="_blank" class="map-btn">
+                                <i class="fas fa-location-arrow mr-2"></i> Vai al Bar Semprevisa
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Punto 4 -->
+                <div class="timeline-item flex flex-col md:flex-row" data-aos="fade-left">
+                    <div class="timeline-dot"></div>
+                    <div class="pl-12 md:pl-0 md:w-1/2 md:pr-12 md:text-right mb-4 md:mb-0 order-2 md:order-1">
+                        <div class="moto-card p-6 rounded-2xl">
+                            <h4 class="text-white font-bold text-lg mb-1"><i class="fa-solid fa-building-columns mr-2 text-amber-500"></i>Sant'Oreste</h4>
+                            <p class="text-gray-300">Pranzo presso il Pub Cruscioff</p>
+                            <a href="https://maps.app.goo.gl/ovmwaWugZZxSxHdf8" target="_blank" class="map-btn">
+                                <i class="fas fa-location-arrow mr-2"></i> Vai al Pub Cruscioff
+                            </a>
+                        </div>
+                    </div>
+                    <div class="pl-12 md:pl-12 md:w-1/2 order-1 md:order-2">
+                        <span class="text-amber-500 font-bold text-2xl italic">Arrivo/Pranzo</span>
+                    </div>
+
+                </div>
+
+                <!-- Punto 5 -->
+                <div class="timeline-item flex flex-col md:flex-row" data-aos="fade-right">
+                    <div class="timeline-dot"></div>
+                    <div class="pl-12 md:pl-0 md:w-1/2 md:pr-12 md:text-right mb-4 md:mb-0">
+                        <span class="text-amber-500 font-bold text-2xl italic">14:00</span>
+                    </div>
+                    <div class="pl-12 md:pl-12 md:w-1/2">
+                        <div class="moto-card p-6 rounded-2xl">
+                            <h4 class="text-white font-bold text-lg mb-1"><i class="fa-solid fa-umbrella-beach mr-2 text-amber-500"></i>Bunker Soratte</h4>
+                            <p class="text-gray-300">Visita guidata  al costo di 12€+10€ per il trenino (2.5 km di tunnel)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Punto 6 -->
+                <div class="timeline-item flex flex-col md:flex-row" data-aos="fade-left">
+                    <div class="timeline-dot"></div>
+                    <div class="pl-12 md:pl-0 md:w-1/2 md:pr-12 md:text-right mb-4 md:mb-0 order-2 md:order-1">
+                        <div class="moto-card p-6 rounded-2xl">
+                            <h4 class="text-white font-bold text-lg mb-1"><i class="fas fa-utensils mr-2 text-amber-500"></i>Rientro</h4>
+                            <p class="text-gray-300">Il rientro dalla SS3 Flaminia</p>
+
+                        </div>
+                    </div>
+                    <div class="pl-12 md:pl-12 md:w-1/2 order-1 md:order-2">
+                        <span class="text-amber-500 font-bold text-2xl italic">Rientro</span>
+                    </div>
+                </div>
+
+                <!-- Punto 7 -->
+                <div class="timeline-item flex flex-col md:flex-row" data-aos="fade-right">
+                    <div class="timeline-dot"></div>
+                    <div class="pl-12 md:pl-0 md:w-1/2 md:pr-12 md:text-right mb-4 md:mb-0">
+                        <span class="text-amber-500 font-bold text-2xl italic">Rientro</span>
+                    </div>
+                    <div class="pl-12 md:pl-12 md:w-1/2">
+                        <div class="moto-card p-6 rounded-2xl">
+                            <h4 class="text-white font-bold text-lg mb-1"><i class="fas fa-road mr-2 text-amber-500"></i>Rientro Libero</h4>
+                            <!-- <p class="text-gray-300">Rifornimento a Colleferro, ENI accanto al bar Marini.</p> -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Punto 8 -->
+                <!-- <div class="timeline-item flex flex-col md:flex-row" data-aos="fade-left">
+                    <div class="timeline-dot"></div>
+                    <div class="pl-12 md:pl-0 md:w-1/2 md:pr-12 md:text-right mb-4 md:mb-0 order-2 md:order-1">
+                        <div class="moto-card p-6 rounded-2xl">
+                            <h4 class="text-white font-bold text-lg mb-1"><i class="fas fa-road mr-2 text-amber-500"></i>Rientro</h4>
+                            <p class="text-gray-300">Possibilità di rientrare utilizzando l'autostrada A1 da Colleferro o Valmontone.</p>
+                        </div>
+                    </div>
+                    <div class="pl-12 md:pl-12 md:w-1/2 order-1 md:order-2">
+                        <span class="text-amber-500 font-bold text-2xl italic">Rientro</span>
+                    </div>
+                </div> -->
+
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <!-- Storia & Leggenda -->
+    <section id="storia" class="py-24 bg-white/5 overflow-hidden" style="padding-bottom:0px;">
+        <div class="container mx-auto px-6">
+            
+            <div class="text-center mb-20" data-aos="fade-up">
+                <h3 class="text-amber-500 font-bold uppercase tracking-[0.4em] mb-2">Approfondimenti</h3>
+                <h2 class="text-5xl md:text-7xl font-black text-white italic uppercase tracking-tighter">Storia & Leggenda</h2>
+            </div>
+
+            <!-- SERMONETA -->
+            <div class="mb-32">
+                <div class="flex flex-col lg:flex-row gap-12 items-center mb-12">
+                    <div class="lg:w-1/2 space-y-6" data-aos="fade-right">
+                        <h3 class="text-4xl font-black text-white uppercase italic tracking-tighter border-l-4 border-amber-500 pl-4">sant'Oreste: Bunker Soratte</h3>
+                        <p class="text-gray-300 text-lg leading-relaxed">
+                          Il Bunker del Monte Soratte, situato nel comune di Sant'Oreste (Roma), è una delle strutture militari sotterranee più complesse e affascinanti d'Italia. Non è solo un tunnel, ma un vero e proprio "ventre corazzato" che ha attraversato le fasi più critiche del XX secolo.
+
+                        </p>
+
+
+
+                        <div class="space-y-4 pt-4">
+                            <div class="accordion-item border border-white/10 rounded-xl overflow-hidden">
+                                <div class="accordion-header p-5 flex justify-between items-center bg-white/5 cursor-pointer" onclick="toggleAccordion(this)">
+                                    <span class="font-bold text-amber-500 uppercase text-sm tracking-widest italic">Dalle bombe alle bibite</span>
+                                    <i class="fas fa-chevron-down chevron-icon text-amber-500"></i>
+                                </div>
+                                <div class="accordion-content">
+                                    <p class="text-gray-400 mb-3">Originariamente progettato negli anni '30 per volere di Mussolini come rifugio antiaereo per le alte cariche del governo (le "Officine Protette del Duce"), durante l'occupazione nazista divenne il quartier generale del feldmaresciallo Albert Kesselring. La curiosità? Dopo la guerra, prima di tornare a uso militare, alcune gallerie furono utilizzate dalla popolazione locale per coltivare funghi e persino per stoccare bottiglie di una nota bevanda gassata, grazie alla temperatura costante.</p>
+                                </div>
+                            </div>
+                            <div class="accordion-item border border-white/10 rounded-xl overflow-hidden">
+                                <div class="accordion-header p-5 flex justify-between items-center bg-white/5 cursor-pointer" onclick="toggleAccordion(this)">
+                                    <span class="font-bold text-amber-500 uppercase text-sm tracking-widest italic">La "Città Segreta" anti-atomica</span>
+                                    <i class="fas fa-chevron-down chevron-icon text-amber-500"></i>
+                                </div>
+                                <div class="accordion-content text-gray-400">
+                                    <p class="mb-3">Negli anni '60, in piena Guerra Fredda, una parte del bunker fu segretamente riconvertita dalla NATO in un rifugio anti-atomico destinato alla Presidenza della Repubblica. Le gallerie furono rinforzate per resistere a un attacco nucleare diretto, complete di sistemi di depurazione dell'aria e scorte per sopravvivere mesi sotto terra.</p>
+                                </div>
+                            </div>
+                            <div class="accordion-item border border-white/10 rounded-xl overflow-hidden">
+                                <div class="accordion-header p-5 flex justify-between items-center bg-white/5 cursor-pointer" onclick="toggleAccordion(this)">
+                                    <span class="font-bold text-amber-500 uppercase text-sm tracking-widest italic">L'oro del Soratte</span>
+                                    <i class="fas fa-chevron-down chevron-icon text-amber-500"></i>
+                                </div>
+                                <div class="accordion-content text-gray-400">
+                                    <p class="mb-3">Esiste una leggenda, mai del tutto smentita, secondo cui i nazisti avrebbero nascosto nel bunker parte dell'oro della Banca d'Italia (circa 70 tonnellate in lingotti) prima di ritirarsi verso il nord. Nonostante numerose ricerche e scavi effettuati nel dopoguerra, il tesoro non è mai stato trovato, alimentando il mistero che avvolge i km di tunnel scavati nella roccia calcarea.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:w-1/2" data-aos="fade-left">
+                        <div class="rounded-2xl overflow-hidden border-2 border-white/10 shadow-2xl">
+                            <img src="FotoPagina/01.jpg" class="w-full h-[400px] object-cover" alt="Sermoneta">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="marquee-container" data-aos="fade-up">
+                    <div class="marquee-content gallery-list">
+                        <div class="gallery-item" onclick="openLightbox(this)"><img src="FotoPagina/02.jpg" alt=""><div class="zoom-overlay"><i class="fas fa-search-plus"></i></div></div>
+                        <div class="gallery-item" onclick="openLightbox(this)"><img src="FotoPagina/03.jpg" alt=""><div class="zoom-overlay"><i class="fas fa-search-plus"></i></div></div>
+                        <div class="gallery-item" onclick="openLightbox(this)"><img src="FotoPagina/04.jpg" alt=""><div class="zoom-overlay"><i class="fas fa-search-plus"></i></div></div>
+                        <div class="gallery-item" onclick="openLightbox(this)"><img src="FotoPagina/05.jpg" alt=""><div class="zoom-overlay"><i class="fas fa-search-plus"></i></div></div>
+                        <div class="gallery-item" onclick="openLightbox(this)"><img src="FotoPagina/06.jpg" alt=""><div class="zoom-overlay"><i class="fas fa-search-plus"></i></div></div>
+                        <div class="gallery-item" onclick="openLightbox(this)"><img src="FotoPagina/07.jpg" alt=""><div class="zoom-overlay"><i class="fas fa-search-plus"></i></div></div>
+                        <!-- Duplicated for infinite scroll -->
+                        <div class="gallery-item" onclick="openLightbox(this)"><img src="FotoPagina/02.jpg" alt=""><div class="zoom-overlay"><i class="fas fa-search-plus"></i></div></div>
+					</div>
+                </div>
+            </div>
+
+
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div id="lightbox">
+        <span class="close-lightbox" onclick="closeLightbox()">&times;</span>
+        <div class="nav-arrow arrow-prev" onclick="changeImage(-1)"><i class="fas fa-chevron-left"></i></div>
+        <img id="lightbox-img" src="" alt="Zoom">
+        <div class="nav-arrow arrow-next" onclick="changeImage(1)"><i class="fas fa-chevron-right"></i></div>
+    </div>
+
+    <!-- Percorso -->
+    <section id="percorso" class="py-24 container mx-auto px-6">
+        <div class="text-center mb-12">
+            <h2 class="text-4xl font-black text-white italic uppercase tracking-tighter">La Mappa del Percorso</h2>
+        </div>
+        <div class="rounded-3xl overflow-hidden border border-white/10 shadow-2xl h-[500px]" data-aos="zoom-in">
+            <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m46!1m12!1m3!1d21251.88133926628!2d12.522126099999992!3d42.26775300000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m31!3e0!4m5!1s0x132f666d5433c98f%3A0xd0c2fbfbf91d26d9!2sSilvestrini%20dal%201963%2C%20Via%20Salaria%2C%201446%2C%2000138%20Roma%20RM!3m2!1d42.0073011!2d12.5192351!4m3!3m2!1d42.1581219!2d12.6579958!4m3!3m2!1d42.2368964!2d12.6178039!4m3!3m2!1d42.232828!2d12.5941166!4m5!1s0x132f1179ac662675%3A0x1ae9360acc88649e!2sPonzano%20Romano%2C%2000060%20RM!3m2!1d42.2569395!2d12.569957299999999!4m5!1s0x132f146dbc97332d%3A0xde95f036e0cd60f8!2sSant&#39;Oreste%2C%2000060%20RM!3m2!1d42.2336344!2d12.514595!5e1!3m2!1sit!2sit!4v1772135028954!5m2!1sit!2sit" 
+                width="100%" height="100%" style="border:0; filter: invert(90%) hue-rotate(180deg) brightness(95%);" allowfullscreen="" loading="lazy">
+            </iframe>
+        </div>
+        <div class="mt-8 text-center">
+             <a href="https://maps.app.goo.gl/wRKxDJtgrdqeYFPX7" target="_blank" class="text-amber-500 font-bold underline hover:text-white transition">Apri percorso completo su Google Maps</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 bg-black border-t border-white/5 text-center">
+		 <center><img src="logo.png" alt="Logo" class="h-11 w-auto" onerror="this.src='https://placehold.co/100x100/f59e0b/black?text=FB'" style="height: 135px;"></center>
+        <div class="container mx-auto px-6">
+            <p class="text-amber-500 font-black uppercase italic text-2xl mb-4">Free Bikers Roma</p>
+            <p class="text-gray-500 text-xs tracking-[0.4em]">© 2026 • Corri Libero • Roma Chapter</p>
+        </div>
+    </footer>
+
+    <script>
+        AOS.init({ duration: 800, once: true });
+
+        function toggleAccordion(element) {
+            const item = element.parentElement;
+            const isActive = item.classList.contains('active');
+            
+            // Close all others
+            document.querySelectorAll('.accordion-item').forEach(i => i.classList.remove('active'));
+
+            if (!isActive) {
+                item.classList.add('active');
+            }
+        }
+
+        // Logic for Draggable and Navigable Gallery
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+        const containers = document.querySelectorAll('.marquee-container');
+
+        containers.forEach(container => {
+            container.addEventListener('mousedown', (e) => {
+                isDown = true;
+                container.classList.add('active');
+                startX = e.pageX - container.offsetLeft;
+                scrollLeft = container.scrollLeft;
+            });
+            container.addEventListener('mouseleave', () => {
+                isDown = false;
+            });
+            container.addEventListener('mouseup', () => {
+                isDown = false;
+            });
+            container.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - container.offsetLeft;
+                const walk = (x - startX) * 2; // Scroll speed
+                container.scrollLeft = scrollLeft - walk;
+            });
+        });
+
+        // Lightbox Logic
+        let currentGalleryItems = [];
+        let currentIndex = 0;
+
+        function openLightbox(element) {
+            const galleryList = element.closest('.gallery-list');
+            currentGalleryItems = Array.from(galleryList.querySelectorAll('img')).map(img => img.src);
+            // Deduplicate for logic if necessary, or just use as is
+            currentIndex = Array.from(galleryList.querySelectorAll('.gallery-item')).indexOf(element);
+            
+            updateLightboxImage();
+            document.getElementById('lightbox').classList.add('active');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
+
+        function changeImage(step) {
+            currentIndex += step;
+            if (currentIndex >= currentGalleryItems.length) currentIndex = 0;
+            if (currentIndex < 0) currentIndex = currentGalleryItems.length - 1;
+            updateLightboxImage();
+        }
+
+        function updateLightboxImage() {
+            const img = document.getElementById('lightbox-img');
+            img.src = currentGalleryItems[currentIndex];
+        }
+
+        // Close on background click
+        document.getElementById('lightbox').addEventListener('click', function(e) {
+            if (e.target === this) closeLightbox();
+        });
+
+    </script>
+</body>
+</html>
