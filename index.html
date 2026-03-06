@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Free Bikers Roma - Roccamorice: Eremo di S. Bartolomeo</title>
+    <title>Free Bikers Roma - Sperlonga e Villa di Tiberio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -279,45 +279,6 @@
             color: black;
         }
     </style>
-
-
-<!-- css bottone registrazione evento -->
-
-<style type="text/css">
-	@keyframes softFlashRed {
-  0% {
-    background-color: #dc2626; /* Rosso scuro */
-    box-shadow: 0 0 10px rgba(220, 38, 38, 0.4);
-    transform: scale(1);
-  }
-  50% {
-    background-color: #ef4444; /* Rosso acceso */
-    box-shadow: 0 0 30px rgba(239, 68, 68, 0.9), 0 0 15px rgba(239, 68, 68, 0.6);
-    transform: scale(1.03);
-  }
-  100% {
-    background-color: #dc2626; /* Rosso scuro */
-    box-shadow: 0 0 10px rgba(220, 38, 38, 0.4);
-    transform: scale(1);
-  }
-}
-
-.btn-flashing-red {
-  animation: softFlashRed 2s infinite ease-in-out;
-  transition: all 0.3s ease;
-  display: inline-block;
-}
-
-.btn-flashing-red:hover {
-  animation-play-state: paused;
-  transform: scale(1.05);
-  background-color: #b91c1c; /* Rosso ancora più scuro al passaggio del mouse */
-}
-
-</style>
-
-
-
 </head>
 <body>
 
@@ -343,30 +304,18 @@
         <div class="hero-bg"></div>
         <div class="relative z-10 container mx-auto px-4 text-center">
             <div data-aos="fade-down">
-                <h2 class="text-amber-500 font-bold tracking-[0.3em] uppercase mb-4">Domenica 12 aprile</h2>
+                <h2 class="text-amber-500 font-bold tracking-[0.3em] uppercase mb-4">Domenica 15 Marzo</h2>
                 <h1 class="text-6xl md:text-9xl font-black mb-8 text-white italic uppercase tracking-tighter leading-none">
-                    Roccamorice: <br><span class="text-amber-500"> Eremo di S. Bartolomeo</span> 
+                    Sant'Oreste: <br><span class="text-amber-500"> Bunker</span> Soratte
                 </h1>
             </div>
             <p class="text-lg md:text-2xl text-gray-300 mb-10 max-w-2xl mx-auto font-light" data-aos="fade-up">
-             Un silenzio scolpito nella Majella. Sospeso tra terra e cielo, incastonato in una vertiginosa parete di roccia a 700 metri di altitudine.
+              Tra storia e Leggenda
             </p>
             <div class="flex flex-col sm:flex-row justify-center gap-4" data-aos="fade-up">
-                <a href="https://maps.app.goo.gl/HhFPRPvGD44qfvxZ9"  class="bg-amber-500 text-black px-10 py-4 rounded-full font-bold uppercase tracking-tighter hover:bg-amber-600 transition" target="_blank">il Percorso</a>
+                <a href="https://maps.app.goo.gl/wRKxDJtgrdqeYFPX7"  class="bg-amber-500 text-black px-10 py-4 rounded-full font-bold uppercase tracking-tighter hover:bg-amber-600 transition" target="_blank">il Percorso</a>
 				<a href="https://sergioanello-del.github.io/Calendario_2026_Free_Bikers_Roma/" class="border border-white/20 text-white px-10 py-4 rounded-full font-bold uppercase tracking-tighter hover:bg-white hover:text-black transition">Torna al Calendario 2026</a>
             </div>
-			<!-- bottone evento -->
-
-			<div class="flex flex-col items-center gap-8" data-aos="fade-up" style="margin: 50px 0px 0px 0px;">
-				<!-- Contenitore originale dei due bottoni -->
-				<!-- Nuovo bottone rosso lampeggiante -->
-				<a href="https://modulo-registrazione-eventi-750229373051.us-west1.run.app/" class="btn-flashing-red text-white px-12 py-5 rounded-full font-black text-xl md:text-2xl uppercase tracking-tighter text-center w-full sm:w-auto">
-					Clicca per registrarti all'evento
-				</a>
-			</div>
-
-
-
         </div>
         <div class="custom-shape-divider-bottom" style="display: none;">
             <svg viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5,73.84-4.36,147.54,16.88,218.2,52.03C693.35,114.06,835.8,126,956,92c103.73-29.35,176.66-83.33,244-106.67V0Z"></path></svg>
@@ -498,92 +447,93 @@
             </div>
         </div>
     </div>
-<script>
-    (function() {
-        /**
-         * CONFIGURAZIONE LOCALITÀ
-         * Modifica questi parametri per cambiare città
-         */
-        const CONFIG = {
-            lat: 42.1821, // Latitudine Eremo di S. Bartolomeo, Roccamorice
-            lon: 14.0383, // Longitudine Eremo di S. Bartolomeo, Roccamorice
-            nomeCitta: "Eremo di S. Bartolomeo",
-            regione: "Roccamorice, Abruzzo"
-        };
 
-        const weatherMap = {
-            0: { desc: 'Sereno', icon: 'fa-sun' },
-            1: { desc: 'Preval. Sereno', icon: 'fa-cloud-sun' },
-            2: { desc: 'Poco Nuvoloso', icon: 'fa-cloud-sun' },
-            3: { desc: 'Nuvoloso', icon: 'fa-cloud' },
-            45: { desc: 'Nebbia', icon: 'fa-smog' },
-            48: { desc: 'Nebbia brinosa', icon: 'fa-smog' },
-            51: { desc: 'Pioggerellina', icon: 'fa-cloud-rain' },
-            61: { desc: 'Pioggia leggera', icon: 'fa-cloud-rain' },
-            63: { desc: 'Pioggia', icon: 'fa-cloud-showers-heavy' },
-            71: { desc: 'Neve leggera', icon: 'fa-snowflake' },
-            80: { desc: 'Rovesci di pioggia', icon: 'fa-cloud-showers-water' },
-            95: { desc: 'Temporale', icon: 'fa-bolt' }
-        };
+    <script>
+        (function() {
+            /**
+             * CONFIGURAZIONE LOCALITÀ
+             * Modifica questi parametri per cambiare città
+             */
+            const CONFIG = {
+                lat: 42.2355, // Latitudine Sant'Oreste
+                lon: 12.5165, // Longitudine Sant'Oreste
+                nomeCitta: "Bunker Soratte",
+                regione: "Sant'Oreste, Lazio"
+            };
 
-        async function fetchWeather() {
-            try {
-                const url = `https://api.open-meteo.com/v1/forecast?latitude=${CONFIG.lat}&longitude=${CONFIG.lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m,visibility&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=Europe%2FRome`;
+            const weatherMap = {
+                0: { desc: 'Sereno', icon: 'fa-sun' },
+                1: { desc: 'Preval. Sereno', icon: 'fa-cloud-sun' },
+                2: { desc: 'Poco Nuvoloso', icon: 'fa-cloud-sun' },
+                3: { desc: 'Nuvoloso', icon: 'fa-cloud' },
+                45: { desc: 'Nebbia', icon: 'fa-smog' },
+                48: { desc: 'Nebbia brinosa', icon: 'fa-smog' },
+                51: { desc: 'Pioggerellina', icon: 'fa-cloud-rain' },
+                61: { desc: 'Pioggia leggera', icon: 'fa-cloud-rain' },
+                63: { desc: 'Pioggia', icon: 'fa-cloud-showers-heavy' },
+                71: { desc: 'Neve leggera', icon: 'fa-snowflake' },
+                80: { desc: 'Rovesci di pioggia', icon: 'fa-cloud-showers-water' },
+                95: { desc: 'Temporale', icon: 'fa-bolt' }
+            };
+
+            async function fetchWeather() {
+                try {
+                    const url = `https://api.open-meteo.com/v1/forecast?latitude=${CONFIG.lat}&longitude=${CONFIG.lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m,visibility&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=Europe%2FRome`;
+                    
+                    const response = await fetch(url);
+                    const data = await response.json();
+                    updateUI(data);
+                } catch (error) {
+                    console.error("Errore recupero meteo:", error);
+                    document.getElementById('city-name').innerText = "Errore Caricamento";
+                }
+            }
+
+            function updateUI(data) {
+                document.getElementById('city-name').innerText = CONFIG.nomeCitta;
+                document.getElementById('city-region').innerHTML = `<i class="fas fa-location-dot"></i> ${CONFIG.regione}`;
                 
-                const response = await fetch(url);
-                const data = await response.json();
-                updateUI(data);
-            } catch (error) {
-                console.error("Errore recupero meteo:", error);
-                document.getElementById('city-name').innerText = "Errore Caricamento";
+                const current = data.current;
+                const weather = weatherMap[current.weather_code] || { desc: 'N.D.', icon: 'fa-cloud' };
+
+                document.getElementById('current-temp').innerText = Math.round(current.temperature_2m) + '°';
+                document.getElementById('weather-desc').innerText = weather.desc;
+                document.getElementById('main-icon').className = `fas ${weather.icon} text-6xl md:text-7xl text-sky-300`;
+                document.getElementById('wind-speed').innerText = current.wind_speed_10m + ' km/h';
+                document.getElementById('humidity').innerText = current.relative_humidity_2m + '%';
+                document.getElementById('visibility').innerText = (current.visibility / 1000).toFixed(1) + ' km';
+
+                const oggi = new Date();
+                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                document.getElementById('sb-current-date').innerText = oggi.toLocaleDateString('it-IT', options);
+
+                const forecastContainer = document.getElementById('sb-forecast-render');
+                let html = '';
+                const giorni = ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'];
+
+                for (let i = 0; i < 7; i++) {
+                    const date = new Date();
+                    date.setDate(date.getDate() + i);
+                    const dayName = i === 0 ? 'Oggi' : giorni[date.getDay()];
+                    const dayCode = data.daily.weather_code[i];
+                    const dayWeather = weatherMap[dayCode] || { icon: 'fa-cloud' };
+
+                    html += `
+                        <div class="sb-forecast-day">
+                            <div class="text-[10px] uppercase font-bold opacity-50 mb-3 text-white">${dayName}</div>
+                            <i class="fas ${dayWeather.icon} text-xl my-3 text-sky-300"></i>
+                            <div class="text-sm md:text-lg font-bold text-white">${Math.round(data.daily.temperature_2m_max[i])}°</div>
+                            <div class="text-[10px] opacity-40 text-white">${Math.round(data.daily.temperature_2m_min[i])}°</div>
+                        </div>
+                    `;
+                }
+                forecastContainer.innerHTML = html;
             }
-        }
-
-        function updateUI(data) {
-            document.getElementById('city-name').innerText = CONFIG.nomeCitta;
-            document.getElementById('city-region').innerHTML = `<i class="fas fa-location-dot"></i> ${CONFIG.regione}`;
-            
-            const current = data.current;
-            const weather = weatherMap[current.weather_code] || { desc: 'N.D.', icon: 'fa-cloud' };
-
-            document.getElementById('current-temp').innerText = Math.round(current.temperature_2m) + '°';
-            document.getElementById('weather-desc').innerText = weather.desc;
-            document.getElementById('main-icon').className = `fas ${weather.icon} text-6xl md:text-7xl text-sky-300`;
-            document.getElementById('wind-speed').innerText = current.wind_speed_10m + ' km/h';
-            document.getElementById('humidity').innerText = current.relative_humidity_2m + '%';
-            document.getElementById('visibility').innerText = (current.visibility / 1000).toFixed(1) + ' km';
-
-            const oggi = new Date();
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            document.getElementById('sb-current-date').innerText = oggi.toLocaleDateString('it-IT', options);
-
-            const forecastContainer = document.getElementById('sb-forecast-render');
-            let html = '';
-            const giorni = ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'];
-
-            for (let i = 0; i < 7; i++) {
-                const date = new Date();
-                date.setDate(date.getDate() + i);
-                const dayName = i === 0 ? 'Oggi' : giorni[date.getDay()];
-                const dayCode = data.daily.weather_code[i];
-                const dayWeather = weatherMap[dayCode] || { icon: 'fa-cloud' };
-
-                html += `
-                    <div class="sb-forecast-day">
-                        <div class="text-[10px] uppercase font-bold opacity-50 mb-3 text-white">${dayName}</div>
-                        <i class="fas ${dayWeather.icon} text-xl my-3 text-sky-300"></i>
-                        <div class="text-sm md:text-lg font-bold text-white">${Math.round(data.daily.temperature_2m_max[i])}°</div>
-                        <div class="text-[10px] opacity-40 text-white">${Math.round(data.daily.temperature_2m_min[i])}°</div>
-                    </div>
-                `;
-            }
-            forecastContainer.innerHTML = html;
-        }
-
-        fetchWeather();
-        setInterval(fetchWeather, 30 * 60 * 1000);
-    })();
-</script>
+27/02/2026
+            fetchWeather();
+            setInterval(fetchWeather, 30 * 60 * 1000);
+        })();
+    </script>
 
 
 
@@ -591,7 +541,7 @@
 
 
     <!-- Info Box Bunker -->
-    <!-- <section class="py-12 bg-black relative">
+    <section class="py-12 bg-black relative">
         <div class="container mx-auto px-6 max-w-7xl">
             <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 md:p-8 shadow-2xl relative overflow-hidden" data-aos="fade-up">
                 <div class="absolute top-0 left-0 w-2 h-full bg-sky-500"></div>
@@ -619,41 +569,36 @@
                 </div>
             </div>
         </div>
-    </section> -->
+    </section>
 <!-- Sezione Menù -->
 <section id="menu" class="py-24 bg-black relative">
     <div class="container mx-auto px-6 max-w-7xl">
         
         <!-- Intestazione Sezione -->
         <div class="text-center mb-16" data-aos="fade-down">
-           	<h4 class="text-3xl md:text-5xl text-amber-500 font-bold text-lg mb-1"><i class="fa-solid fa-utensils mr-2 text-amber-500"  style="padding: 20px;"></i></h4>
-			<h3 class="text-amber-500 font-bold uppercase tracking-[0.3em] mb-2">il ristorante</h3>
-			<h4 class="text-3xl md:text-5xl text-amber-500 font-bold text-lg mb-1">Terrae Eremis</h4>
-
-            <h2 class="text-3xl md:text-5xl  font-black text-white italic uppercase tracking-tighter" style="padding: 10px;">Menù a € 25</h2>
+            <h3 class="text-amber-500 font-bold uppercase tracking-[0.3em] mb-2">Per il 15 Marzo</h3>
+            <h2 class="text-5xl md:text-7xl font-black text-white italic uppercase tracking-tighter">Menù a € 25</h2>
             <!-- <p class="text-gray-400 mt-4 italic text-lg">Naturalmente possiamo modificare il menù</p> -->
-			<p class="text-gray-300"><strong>Parcheggio moto presso il ristorante</strong></p>
-			<a href="https://maps.app.goo.gl/fGbZsCcd9o6SbQyB6" target="_blank" class="map-btn">
-				<i class="fas fa-location-arrow mr-2"></i> Vai al Ristorante Terrae Eremis
-			</a>
         </div>
-        <div class="text-center mb-16" data-aos="fade-down">
 
-		</div>
         <!-- Griglia Menù -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             
             <!-- Antipasto -->
             <div class="moto-card p-6 rounded-2xl relative overflow-hidden" data-aos="fade-up" data-aos-delay="100">
                 <div class="absolute top-0 right-0 p-4 opacity-5">
-                    <i class="fas fa-bacon text-8xl text-amber-500"></i>
+                    <i class="fas fa-cheese text-8xl text-amber-500"></i>
                 </div>
                 <h4 class="text-white font-black text-2xl italic uppercase mb-1">
-                    <i class="fas fa-bacon mr-2 text-amber-500"></i>Antipasto
+                    <i class="fas fa-utensils mr-2 text-amber-500"></i>Antipasto
                 </h4>
                 <p class="text-amber-500 text-xs font-bold uppercase tracking-widest mb-4">Piatto individuale</p>
                 <ul class="text-gray-300 space-y-3 text-sm relative z-10">
-                    <li class="flex items-start"><i class="fas fa-check text-amber-500 mt-1 mr-3"></i>Antipasto di salumi è formaggi locali</li>
+                    <li class="flex items-start"><i class="fas fa-check text-amber-500 mt-1 mr-3"></i>Prosciutto crudo, Salame e Lonza</li>
+                    <li class="flex items-start"><i class="fas fa-check text-amber-500 mt-1 mr-3"></i>Patata agli aromi</li>
+                    <li class="flex items-start"><i class="fas fa-check text-amber-500 mt-1 mr-3"></i>Verdure grigliate</li>
+                    <li class="flex items-start"><i class="fas fa-check text-amber-500 mt-1 mr-3"></i>Mix di polpettine fritte</li>
+                    <li class="flex items-start"><i class="fas fa-check text-amber-500 mt-1 mr-3"></i>Bruschette</li>
                 </ul>
             </div>
 
@@ -667,22 +612,22 @@
                 </h4>
                 <p class="text-amber-500 text-xs font-bold uppercase tracking-widest mb-4">Servito al piatto</p>
                 <ul class="text-gray-300 space-y-3 text-sm relative z-10">
-                    <li class="flex items-start"><i class="fas fa-check text-amber-500 mt-1 mr-3"></i><strong>Spaghetti al ragù di agnello</strong></li>
-
+                    <li class="flex items-start"><i class="fas fa-check text-amber-500 mt-1 mr-3"></i><strong>Pappardelle fatte in casa</strong></li>
+                    <li class="flex items-start"><i class="fas fa-check text-amber-500 mt-1 mr-3"></i>Ragù di cinghiale in bianco</li>
                 </ul>
             </div>
 
             <!-- Dolce -->
             <div class="moto-card p-6 rounded-2xl relative overflow-hidden" data-aos="fade-up" data-aos-delay="300">
                 <div class="absolute top-0 right-0 p-4 opacity-5">
-                    <i class="fas fa-cheese text-8xl text-amber-500"></i>
+                    <i class="fas fa-ice-cream text-8xl text-amber-500"></i>
                 </div>
                 <h4 class="text-white font-black text-2xl italic uppercase mb-1">
-                    <i class="fas fa-cheese mr-2 text-amber-500"></i>Dolce
+                    <i class="fas fa-ice-cream mr-2 text-amber-500"></i>Dolce
                 </h4>
                 <p class="text-amber-500 text-xs font-bold uppercase tracking-widest mb-4">Produzione propria</p>
                 <ul class="text-gray-300 space-y-3 text-sm relative z-10">
-                    <li class="flex items-start"><i class="fas fa-check text-amber-500 mt-1 mr-3"></i>Dolce crostata alle Ciliegie oppure Cheesecake con topping a scelta,</li>
+                    <li class="flex items-start"><i class="fas fa-check text-amber-500 mt-1 mr-3"></i>Gelato Artigianale (a scelta tra 2 gusti)</li>
                 </ul>
             </div>
 
@@ -696,25 +641,25 @@
                 </h4>
                 <p class="text-amber-500 text-xs font-bold uppercase tracking-widest mb-4">Incluse nel prezzo</p>
                 <ul class="text-gray-300 space-y-3 text-sm relative z-10">
+                    <li class="flex items-start"><i class="fas fa-check text-amber-500 mt-1 mr-3"></i>Coca Cola / Aranciata</li>
                     <li class="flex items-start"><i class="fas fa-check text-amber-500 mt-1 mr-3"></i>Acqua minerale</li>
-                    <li class="flex items-start"><i class="fas fa-check text-amber-500 mt-1 mr-3"></i>Vino della casa</li>
-					<li class="flex items-start"><i class="fas fa-check text-amber-500 mt-1 mr-3"></i>Caffè €25</li>
+                    <li class="flex items-start"><i class="fas fa-check text-amber-500 mt-1 mr-3"></i>Vino in bottiglia (1L ogni 4 persone)</li>
                 </ul>
             </div>
 
         </div>
 
         <!-- Opzioni Vegetariane (Box Evidenziato) -->
-        <!-- <div class="mt-10 bg-gray-900 border border-gray-800 rounded-xl p-6 md:p-8 shadow-2xl relative overflow-hidden" data-aos="fade-up" data-aos-delay="500">
-            
+        <div class="mt-10 bg-gray-900 border border-gray-800 rounded-xl p-6 md:p-8 shadow-2xl relative overflow-hidden" data-aos="fade-up" data-aos-delay="500">
+            <!-- Bordo laterale colorato -->
             <div class="absolute top-0 left-0 w-2 h-full bg-amber-500"></div>
-           
+            
             <div class="flex flex-col md:flex-row items-start md:items-center gap-6">
-               
+                <!-- Icona -->
                 <div class="bg-amber-500/10 p-4 rounded-full flex-shrink-0">
                     <i class="fas fa-leaf text-amber-500 text-3xl"></i>
                 </div>
-               
+                <!-- Testo -->
                 <div class="flex-1">
                     <h3 class="text-xl md:text-2xl font-bold text-white mb-2">Opzioni Vegetariane (Su richiesta)</h3>
                     <p class="text-gray-300 text-base leading-relaxed">
@@ -724,10 +669,11 @@
                     </p>
                 </div>
             </div>
-        </div> -->
+        </div>
 
     </div>
 </section>
+
 
 
 
@@ -746,14 +692,14 @@
                 <div class="timeline-item flex flex-col md:flex-row" data-aos="fade-right">
                     <div class="timeline-dot"></div>
                     <div class="pl-12 md:pl-0 md:w-1/2 md:pr-12 md:text-right mb-4 md:mb-0">
-                        <span class="text-amber-500 font-bold text-2xl italic">08:00</span>
+                        <span class="text-amber-500 font-bold text-2xl italic">09:00</span>
                     </div>
                     <div class="pl-12 md:pl-12 md:w-1/2">
                         <div class="moto-card p-6 rounded-2xl">
                             <h4 class="text-white font-bold text-lg mb-1"><i class="fas fa-flag-checkered mr-2 text-amber-500"></i>Appuntamento</h4>
-                            <p class="text-gray-300">Presso il Bar BARONE in via Tiburtina 1412 (distributore IP)</p>
-                            <a href="https://maps.app.goo.gl/wGJ8ZjH8zCGi96iz6" target="_blank" class="map-btn">
-                                <i class="fas fa-location-arrow mr-2"></i> Vai Al Bar Barone
+                            <p class="text-gray-300">Presso il Bar Pasticceria Fratelli Silvestrini in via Salaria 1446 Settebagni</p>
+                            <a href="https://maps.app.goo.gl/Ziq5u5ipATdCn9mv6" target="_blank" class="map-btn">
+                                <i class="fas fa-location-arrow mr-2"></i> Vai Al Bar Pasticceria Fratelli Silvestrini
                             </a>
                         </div>
                     </div>
@@ -765,11 +711,11 @@
                     <div class="pl-12 md:pl-0 md:w-1/2 md:pr-12 md:text-right mb-4 md:mb-0 order-2 md:order-1">
                         <div class="moto-card p-6 rounded-2xl">
                             <h4 class="text-white font-bold text-lg mb-1"><i class="fa-solid fa-motorcycle mr-2 text-amber-500"></i>Partenza</h4>
-                            <p class="text-gray-300">Partenza con pieno carburante<br>Direzione A24+A25 fino a CELANO - AIELLI</p>
+                            <p class="text-gray-300">Partenza con pieno carburante</p>
                         </div>
                     </div>
                     <div class="pl-12 md:pl-12 md:w-1/2 order-1 md:order-2">
-                        <span class="text-amber-500 font-bold text-2xl italic">08.30</span>
+                        <span class="text-amber-500 font-bold text-2xl italic">09.30/45</span>
                     </div>
                 </div>
 
@@ -782,9 +728,9 @@
                     <div class="pl-12 md:pl-12 md:w-1/2">
                         <div class="moto-card p-6 rounded-2xl">
                             <h4 class="text-white font-bold text-lg mb-1"><i class="fas fa-coffee mr-2 text-amber-500"></i>Pausa Caffè</h4>
-                            <p class="text-gray-300">Sosta al Bar D'Amore località Cerchio (AQ)</p>
-                            <a href="https://maps.app.goo.gl/JqJrSDsNnbeSZGsKA" target="_blank" class="map-btn">
-                                <i class="fas fa-location-arrow mr-2"></i> Vai al Bar D'Amore
+                            <p class="text-gray-300">Sosta al Bar - Sunny Bar a Ponzano Romano</p>
+                            <a href="https://maps.app.goo.gl/oFHNKPSRQaQSED5B8" target="_blank" class="map-btn">
+                                <i class="fas fa-location-arrow mr-2"></i> Vai al Bar Sunny
                             </a>
                         </div>
                     </div>
@@ -795,15 +741,15 @@
                     <div class="timeline-dot"></div>
                     <div class="pl-12 md:pl-0 md:w-1/2 md:pr-12 md:text-right mb-4 md:mb-0 order-2 md:order-1">
                         <div class="moto-card p-6 rounded-2xl">
-                            <h4 class="text-white font-bold text-lg mb-1"><i class="fa-solid fa-utensils mr-2 text-amber-500"></i>Ristorante Terrae Eremis</h4>
-                            <p class="text-gray-300">Pranzo presso il Ristorante Terrae Eremis<br><strong>Parcheggio moto presso il ristorante</strong></p>
-                            <a href="https://maps.app.goo.gl/fGbZsCcd9o6SbQyB6" target="_blank" class="map-btn">
-                                <i class="fas fa-location-arrow mr-2"></i> Vai al Ristorante Terrae Eremis
+                            <h4 class="text-white font-bold text-lg mb-1"><i class="fa-solid fa-utensils mr-2 text-amber-500"></i>Sant'Oreste</h4>
+                            <p class="text-gray-300">Pranzo presso il Pub Cruscioff<br><strong>Il menu e il costo sono in fase di definiizione!</strong></p>
+                            <a href="https://maps.app.goo.gl/ovmwaWugZZxSxHdf8" target="_blank" class="map-btn">
+                                <i class="fas fa-location-arrow mr-2"></i> Vai al Pub Cruscioff
                             </a>
                         </div>
                     </div>
                     <div class="pl-12 md:pl-12 md:w-1/2 order-1 md:order-2">
-                        <span class="text-amber-500 font-bold text-2xl italic">Arrivo Roccamorice<br>Pranzo</span>
+                        <span class="text-amber-500 font-bold text-2xl italic">Arrivo/Pranzo</span>
                     </div>
 
                 </div>
@@ -816,11 +762,8 @@
                     </div>
                     <div class="pl-12 md:pl-12 md:w-1/2">
                         <div class="moto-card p-6 rounded-2xl">
-                            <h4 class="text-white font-bold text-lg mb-1"><i class=" fa-solid fa-landmark-dome mr-2 text-amber-500"></i>Eremo di San Bartolomeo</h4>
-                            <p class="text-gray-300">Raggiungeremo l'Eremo di San Bartolomeo in Legio percorrendo un sentiero a piedi (circa 20 minuti)</p>
-                            <a href="https://loc.wiki/t/59227644?wa=sc" target="_blank" class="map-btn">
-                                <i class="fas fa-location-arrow mr-2"></i> Vai al Tracciato
-                            </a>
+                            <h4 class="text-white font-bold text-lg mb-1"><i class=" fa-solid fa-bomb mr-2 text-amber-500"></i>Bunker Soratte</h4>
+                            <p class="text-gray-300">Visita guidata  al costo di 12€+10€ per il trenino (2.5 km di tunnel)</p>
                         </div>
                     </div>
                 </div>
@@ -831,7 +774,7 @@
                     <div class="pl-12 md:pl-0 md:w-1/2 md:pr-12 md:text-right mb-4 md:mb-0 order-2 md:order-1">
                         <div class="moto-card p-6 rounded-2xl">
                             <h4 class="text-white font-bold text-lg mb-1"><i class="fas fa-road mr-2 text-amber-500"></i>Rientro</h4>
-                            <p class="text-gray-300">A25 da Bussi Popoli</p>
+                            <p class="text-gray-300">Il rientro dalla SS3 Flaminia</p>
 
                         </div>
                     </div>
@@ -875,10 +818,6 @@
 
 
 
-
-
-
-
     <!-- Storia & Leggenda -->
     <section id="storia" class="py-24 bg-white/5 overflow-hidden" style="padding-bottom:0px;">
         <div class="container mx-auto px-6">
@@ -892,9 +831,9 @@
             <div class="mb-32">
                 <div class="flex flex-col lg:flex-row gap-12 items-center mb-12">
                     <div class="lg:w-1/2 space-y-6" data-aos="fade-right">
-                        <h3 class="text-4xl font-black text-white uppercase italic tracking-tighter border-l-4 border-amber-500 pl-4">Roccamorice: Eremo di S. Bartolomeo</h3>
+                        <h3 class="text-4xl font-black text-white uppercase italic tracking-tighter border-l-4 border-amber-500 pl-4">sant'Oreste: Bunker Soratte</h3>
                         <p class="text-gray-300 text-lg leading-relaxed">
-                          Nel cuore pulsante della Majella, dove la natura si fa architettura e la roccia sembra sussurrare memorie millenarie, sorge l'Eremo di San Bartolomeo in Legio. Questo luogo non è solo una meta di pellegrinaggio, ma una soglia che separa il frenetico presente dal silenzio contemplativo che qui regna sovrano.
+                          Il Bunker del Monte Soratte, situato nel comune di Sant'Oreste (Roma), è una delle strutture militari sotterranee più complesse e affascinanti d'Italia. Non è solo un tunnel, ma un vero e proprio "ventre corazzato" che ha attraversato le fasi più critiche del XX secolo.
 
                         </p>
 
@@ -903,29 +842,29 @@
                         <div class="space-y-4 pt-4">
                             <div class="accordion-item border border-white/10 rounded-xl overflow-hidden">
                                 <div class="accordion-header p-5 flex justify-between items-center bg-white/5 cursor-pointer" onclick="toggleAccordion(this)">
-                                    <span class="font-bold text-amber-500 uppercase text-sm tracking-widest italic">Costruito "nella" roccia</span>
+                                    <span class="font-bold text-amber-500 uppercase text-sm tracking-widest italic">Dalle bombe alle bibite</span>
                                     <i class="fas fa-chevron-down chevron-icon text-amber-500"></i>
                                 </div>
                                 <div class="accordion-content">
-                                    <p class="text-gray-400 mb-3">A differenza di molte strutture che poggiano sul terreno, l'eremo è letteralmente scavato all'interno di una balconata rocciosa naturale. Fu ricostruito intorno al 1250 da Pietro da Morrone (che divenne poi Papa Celestino V), il quale scelse questo luogo proprio per la sua estrema solitudine e il silenzio quasi mistico.</p>
+                                    <p class="text-gray-400 mb-3">Originariamente progettato negli anni '30 per volere di Mussolini come rifugio antiaereo per le alte cariche del governo (le "Officine Protette del Duce"), durante l'occupazione nazista divenne il quartier generale del feldmaresciallo Albert Kesselring. La curiosità? Dopo la guerra, prima di tornare a uso militare, alcune gallerie furono utilizzate dalla popolazione locale per coltivare funghi e persino per stoccare bottiglie di una nota bevanda gassata, grazie alla temperatura costante.</p>
                                 </div>
                             </div>
                             <div class="accordion-item border border-white/10 rounded-xl overflow-hidden">
                                 <div class="accordion-header p-5 flex justify-between items-center bg-white/5 cursor-pointer" onclick="toggleAccordion(this)">
-                                    <span class="font-bold text-amber-500 uppercase text-sm tracking-widest italic">L'acqua "miracolosa"</span>
+                                    <span class="font-bold text-amber-500 uppercase text-sm tracking-widest italic">La "Città Segreta" anti-atomica</span>
                                     <i class="fas fa-chevron-down chevron-icon text-amber-500"></i>
                                 </div>
                                 <div class="accordion-content text-gray-400">
-                                    <p class="mb-3">All'interno dell'eremo si trova una piccola sorgente d'acqua chiamata "Fonte di San Bartolomeo". Secondo una credenza popolare molto radicata, quest'acqua avrebbe proprietà curative; per secoli i fedeli hanno strofinato il corpo contro le pareti umide o bevuto l'acqua convinti della sua natura miracolosa.</p>
+                                    <p class="mb-3">Negli anni '60, in piena Guerra Fredda, una parte del bunker fu segretamente riconvertita dalla NATO in un rifugio anti-atomico destinato alla Presidenza della Repubblica. Le gallerie furono rinforzate per resistere a un attacco nucleare diretto, complete di sistemi di depurazione dell'aria e scorte per sopravvivere mesi sotto terra.</p>
                                 </div>
                             </div>
                             <div class="accordion-item border border-white/10 rounded-xl overflow-hidden">
                                 <div class="accordion-header p-5 flex justify-between items-center bg-white/5 cursor-pointer" onclick="toggleAccordion(this)">
-                                    <span class="font-bold text-amber-500 uppercase text-sm tracking-widest italic">Il misticismo del paesaggio</span>
+                                    <span class="font-bold text-amber-500 uppercase text-sm tracking-widest italic">L'oro del Soratte</span>
                                     <i class="fas fa-chevron-down chevron-icon text-amber-500"></i>
                                 </div>
                                 <div class="accordion-content text-gray-400">
-                                    <p class="mb-3">Per raggiungere l'eremo bisogna percorrere un sentiero che offre una vista spettacolare sul Vallone di Santo Spirito. La particolarità è che l'eremo è talmente ben mimetizzato nella roccia che rimane completamente invisibile fino a quando non ci si trova a pochi metri di distanza, quasi volesse proteggersi dagli sguardi indiscreti.</p>
+                                    <p class="mb-3">Esiste una leggenda, mai del tutto smentita, secondo cui i nazisti avrebbero nascosto nel bunker parte dell'oro della Banca d'Italia (circa 70 tonnellate in lingotti) prima di ritirarsi verso il nord. Nonostante numerose ricerche e scavi effettuati nel dopoguerra, il tesoro non è mai stato trovato, alimentando il mistero che avvolge i km di tunnel scavati nella roccia calcarea.</p>
                                 </div>
                             </div>
                         </div>
@@ -971,12 +910,12 @@
         </div>
         <div class="rounded-3xl overflow-hidden border border-white/10 shadow-2xl h-[500px]" data-aos="zoom-in">
             <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m48!1m12!1m3!1d379740.97007329186!2d13.148184158603366!3d41.96321295331251!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m33!3e0!4m5!1s0x132f7b005e85ac61%3A0x2c3eb903325e92e!2sCaffetteria%20Bistrot%20Barone%2C%20Via%20Tiburtina%2C%201412%2C%2000131%20Roma%20RM!3m2!1d41.9386553!2d12.62849!4m3!3m2!1d42.0579608!2d13.5670203!4m5!1s0x133024b35451c167%3A0x1e02971bdf2acba2!2sCastelvecchio%20Subequo%2C%2067024%20AQ!3m2!1d42.130531399999995!2d13.7306715!4m3!3m2!1d42.1122703!2d13.8786989!4m5!1s0x13304f108adfb2eb%3A0xeedbe3d7a75a72a7!2sEremo%20di%20San%20Bartolomeo%20in%20Legio%2C%20Localit%C3%A0%20Vallone%20di%20S.%20Spirito%2C%2065020%20Roccamorice%20PE!3m2!1d42.1820352!2d14.038968599999999!4m5!1s0x13304f067801712f%3A0xc9430fd571df90ec!2sSentiero%20per%20Eremo%20di%20San%20Bartolomeo%2C%20SP64%2C%2065020%20Roccamorice%20PE!3m2!1d42.1836634!2d14.047889!5e0!3m2!1sit!2sit!4v1772794149584!5m2!1sit!2sit" 
+                src="https://www.google.com/maps/embed?pb=!1m46!1m12!1m3!1d21251.88133926628!2d12.522126099999992!3d42.26775300000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m31!3e0!4m5!1s0x132f666d5433c98f%3A0xd0c2fbfbf91d26d9!2sSilvestrini%20dal%201963%2C%20Via%20Salaria%2C%201446%2C%2000138%20Roma%20RM!3m2!1d42.0073011!2d12.5192351!4m3!3m2!1d42.1581219!2d12.6579958!4m3!3m2!1d42.2368964!2d12.6178039!4m3!3m2!1d42.232828!2d12.5941166!4m5!1s0x132f1179ac662675%3A0x1ae9360acc88649e!2sPonzano%20Romano%2C%2000060%20RM!3m2!1d42.2569395!2d12.569957299999999!4m5!1s0x132f146dbc97332d%3A0xde95f036e0cd60f8!2sSant&#39;Oreste%2C%2000060%20RM!3m2!1d42.2336344!2d12.514595!5e1!3m2!1sit!2sit!4v1772135028954!5m2!1sit!2sit" 
                 width="100%" height="100%" style="border:0; filter: invert(90%) hue-rotate(180deg) brightness(95%);" allowfullscreen="" loading="lazy">
             </iframe>
         </div>
         <div class="mt-8 text-center">
-             <a href="https://maps.app.goo.gl/HhFPRPvGD44qfvxZ9" target="_blank" class="text-amber-500 font-bold underline hover:text-white transition">Apri percorso completo su Google Maps</a>
+             <a href="https://maps.app.goo.gl/wRKxDJtgrdqeYFPX7" target="_blank" class="text-amber-500 font-bold underline hover:text-white transition">Apri percorso completo su Google Maps</a>
         </div>
     </section>
 
