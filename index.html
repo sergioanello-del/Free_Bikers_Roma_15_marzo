@@ -875,50 +875,69 @@
 
 <!-- inizio video -->
 <style type="text/css">
-	/* --- Sezione con animazione di fondo --- */
+/* --- Sezione contenitore con Effetto Parallax --- */
 .video-promo-section {
     position: relative;
     width: 100%;
-    /* Rende la sezione "stretta e lunga" (fascia orizzontale) */
-    padding: 60px 20px; 
-    /* Gradiente scuro/rosso in stile biker */
-    background: linear-gradient(45deg, #111111, #2b2b2b, #8b0000, #111111);
-    background-size: 400% 400%;
-    animation: gradientBG 12s ease infinite;
+    /* Ho aumentato il padding per rendere il parallax più evidente durante lo scroll */
+    padding: 120px 20px; 
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
     color: #ffffff;
-    overflow: hidden;
-    box-shadow: inset 0 0 30px rgba(0,0,0,0.8);
+    
+    /* Impostazioni Immagine Parallax in puro CSS */
+    /* INSERISCI QUI IL PERCORSO DELLA TUA IMMAGINE */
+    background-image: url('Video/tn_video.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* È questa regola che crea la magia del Parallax */
+    background-repeat: no-repeat;
 }
 
-/* Keyframes per muovere il gradiente di sfondo */
-@keyframes gradientBG {
+/* --- Animazione di fondo (Overlay in movimento) --- */
+.video-promo-section::before {
+    content: '';
+    position: absolute;
+    top: 0; 
+    left: 0; 
+    right: 0; 
+    bottom: 0;
+    /* Gradiente scuro/rosso che si muove sopra l'immagine parallax */
+    background: linear-gradient(60deg, rgba(17,17,17,0.95), rgba(139,0,0,0.4), rgba(17,17,17,0.95));
+    background-size: 300% 300%;
+    animation: moveGradient 12s ease infinite;
+    z-index: 1;
+}
+
+/* Keyframe per il movimento del gradiente */
+@keyframes moveGradient {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
 }
 
+/* --- Contenuto testuale --- */
 .video-promo-content {
     position: relative;
-    z-index: 2;
+    z-index: 2; /* Mantiene testo e bottone in primo piano rispetto al parallax e all'overlay */
 }
 
 .video-promo-content h2 {
-    font-size: 2.2rem;
+    font-size: 2.5rem;
     margin-bottom: 5px;
     text-transform: uppercase;
     letter-spacing: 2px;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.9);
 }
 
 .video-promo-content p {
-    font-size: 1.1rem;
-    margin-bottom: 25px;
-    color: #cccccc;
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    color: #e0e0e0;
     font-style: italic;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
 }
 
 /* --- Bottone animato --- */
@@ -930,13 +949,12 @@
     font-size: 1.1rem;
     font-weight: bold;
     color: #fff;
-    background-color: #e62429; /* Rosso acceso tipo YouTube */
+    background-color: #e62429;
     border-radius: 50px;
     text-decoration: none;
     text-transform: uppercase;
     box-shadow: 0 0 15px rgba(230, 36, 41, 0.6);
     transition: all 0.3s ease;
-    /* Effetto pulsante per attirare i clic */
     animation: pulseBtn 2s infinite; 
 }
 
@@ -945,26 +963,19 @@
     font-size: 1.3rem;
 }
 
-/* Effetto Hover sul bottone */
 .animated-play-btn:hover {
     background-color: #ff3b40;
     color: #fff;
     box-shadow: 0 0 25px rgba(255, 59, 64, 0.9);
     transform: translateY(-3px) scale(1.05);
-    animation: none; /* Ferma il pulse quando l'utente ci passa sopra */
+    animation: none;
 }
 
-/* Keyframes per il bagliore pulsante del bottone */
 @keyframes pulseBtn {
-    0% {
-        box-shadow: 0 0 0 0 rgba(230, 36, 41, 0.7);
-    }
-    70% {
-        box-shadow: 0 0 0 15px rgba(230, 36, 41, 0);
-    }
-    100% {
-        box-shadow: 0 0 0 0 rgba(230, 36, 41, 0);
-    }
+    0% { box-shadow: 0 0 0 0 rgba(230, 36, 41, 0.7); }
+    70% { box-shadow: 0 0 0 15px rgba(230, 36, 41, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(230, 36, 41, 0); }
+}
 }
 
 </style>
@@ -976,11 +987,10 @@
         <h2>Guarda il Video</h2>
         <p>Vivi l'emozione della strada con i Free Bikers Roma</p>
         <a href="URL_DEL_TUO_VIDEO_YOUTUBE" target="_blank" class="animated-play-btn">
-            <span class="play-icon">▶</span> GUARDA ORA il video
+            <span class="play-icon">▶</span> GUARDA ORA su YouTube
         </a>
     </div>
 </section>
-
 
 
 <!-- fine video -->
