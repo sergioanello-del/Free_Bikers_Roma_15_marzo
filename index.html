@@ -868,307 +868,154 @@
 
 
 
-<!-- inizio video gallery -->
 
 
 
-<style>
-    :root {
-        --fb-primary: #ff0000;
-        --fb-text: #333;
-        --fb-bg-modal: rgba(0, 0, 0, 0.95);
-        --fb-transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-
-    .fb-video-section {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        padding: 40px 15px;
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-
-    .fb-gallery-title {
-        text-align: center;
-        color: var(--fb-text);
-        margin-bottom: 40px;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        font-weight: 900;
-        animation: fbFadeInDown 0.8s ease-out;
-    }
-
-    /* Grid System */
-    .fb-video-wall {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 20px;
-    }
-
-    .fb-video-item {
-        position: relative;
-        border-radius: 12px;
-        overflow: hidden;
-        aspect-ratio: 16 / 9; /* Default per la griglia */
-        cursor: pointer;
-        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-        transition: var(--fb-transition);
-        background-color: #000;
-        animation: fbFadeInUp 0.6s forwards;
-    }
-
-    .fb-video-item:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 15px 35px rgba(255, 0, 0, 0.25);
-    }
-
-    .fb-video-thumb {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        opacity: 0.8;
-        transition: transform 0.6s ease;
-    }
-
-    .fb-video-item:hover .fb-video-thumb {
-        opacity: 1;
-        transform: scale(1.05);
-    }
-
-    /* Play Button */
-    .fb-play-overlay {
-        position: absolute;
-        inset: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: rgba(0, 0, 0, 0.2);
-    }
-
-    .fb-play-icon {
-        width: 60px;
-        height: 60px;
-        background: white;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: var(--fb-transition);
-    }
-
-    .fb-video-item:hover .fb-play-icon {
-        background: var(--fb-primary);
-        transform: scale(1.1);
-    }
-
-    .fb-play-icon svg {
-        width: 30px;
-        fill: #000;
-        margin-left: 3px;
-    }
-
-    .fb-video-item:hover .fb-play-icon svg {
-        fill: #fff;
-    }
-
-    /* Modal Styling */
-    .fb-modal-overlay {
-        position: fixed;
-        inset: 0;
-        background: var(--fb-bg-modal);
-        display: none;
-        justify-content: center;
-        align-items: center;
-        z-index: 99999;
-        backdrop-filter: blur(10px);
-        padding: 20px;
-
-    }
-
-    .fb-modal-overlay.active { display: flex; }
-
-    .fb-modal-content {
-        position: relative;
-        width: 100%;
-        /* Le dimensioni massime verranno gestite via JS in base al video */
-        background: #000;
-        border-radius: 8px;
-        box-shadow: 0 0 40px rgba(0,0,0,1);
-        transform: scale(0.8);
-        transition: var(--fb-transition);
-    }
-
-    .fb-modal-overlay.active .fb-modal-content { transform: scale(1); }
-
-    .fb-close-btn {
-        position: absolute;
-        top: -45px;
-        right: -10px;
-        color: #fff;
-        font-size: 40px;
-        background: none;
-        border: none;
-        cursor: pointer;
-    }
-
-    #fbPlayerContainer {
-        width: 100%;
-        height: 100%;
-        display: flex;
-    }
-
-    #fbPlayerContainer video, #fbPlayerContainer iframe {
-        width: 100%;
-        height: 100%;
-        aspect-ratio: inherit;
-    }
-
-    @keyframes fbFadeInUp {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes fbFadeInDown {
-        from { opacity: 0; transform: translateY(-20px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Mobile adjustments */
-    @media (max-width: 768px) {
-        .fb-close-btn {
-            top: -50px;
-            right: 0;
-        }
-        .fb-video-section { padding: 20px 10px; }
-    }
 
 
-</style>
+<!-- inizio video -->
 
 
-<style>
-/* Forza il contenitore della galleria a centrare tutto il contenuto */
-.video-gallery-container, .video-gallery {
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    flex-direction: column; /* Mantiene il titolo sopra e il video sotto */
-    text-align: center;
+<style type="text/css">
+	/* Contenitore principale del link */
+.yt-video-btn {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    gap: 15px;
+    font-family: sans-serif; /* Sostituisci con il font del tuo tema */
+    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    max-width: 350px; /* Regola la larghezza in base alle tue esigenze */
+    margin: 20px auto;
+}
+
+/* Effetto di sollevamento generale al passaggio del mouse */
+.yt-video-btn:hover {
+    transform: translateY(-8px);
+}
+
+/* Contenitore della miniatura con angoli arrotondati e ombra */
+.yt-thumbnail-container {
+    position: relative;
     width: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.4s ease;
+    background-color: #000;
 }
 
-/* Forza l'elemento video/immagine a stare al centro */
-.video-gallery img, .video-gallery video, .video-item {
-    display: block !important;
-    margin: 0 auto !important; /* Centratura orizzontale classica */
-    max-width: 100%;
+/* Bagliore rosso stile YouTube all'hover */
+.yt-video-btn:hover .yt-thumbnail-container {
+    box-shadow: 0 15px 35px rgba(255, 0, 0, 0.3);
 }
+
+/* Immagine di anteprima */
+.yt-thumbnail {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.6s ease, filter 0.4s ease;
+    filter: brightness(0.75); /* Leggermente scura per far risaltare il tasto play */
+}
+
+/* Zoom fluido e schiarimento all'hover */
+.yt-video-btn:hover .yt-thumbnail {
+    transform: scale(1.08);
+    filter: brightness(1);
+}
+
+/* Tasto Play centrale */
+.yt-play-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 65px;
+    height: 65px;
+    background: rgba(255, 0, 0, 0.85);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Animazione "battito" per ingaggiare l'utente */
+    animation: pulse-red 2s infinite;
+    transition: background 0.3s, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.yt-play-icon svg {
+    width: 30px;
+    height: 30px;
+    fill: white;
+    margin-left: 4px; /* Centra visivamente il triangolo */
+}
+
+/* Effetto scatto del tasto play all'hover */
+.yt-video-btn:hover .yt-play-icon {
+    background: #ff0000;
+    transform: translate(-50%, -50%) scale(1.15);
+    animation: none; /* Disabilita il pulse all'hover */
+    box-shadow: 0 0 25px rgba(255, 0, 0, 0.9);
+}
+
+/* Keyframes per l'animazione pulsante */
+@keyframes pulse-red {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 20px rgba(255, 0, 0, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
+    }
+}
+
+/* Testo descrittivo sotto il bottone */
+.yt-btn-text {
+    color: #444; /* Usa un grigio chiaro come #ccc se il sito è in dark mode */
+    font-weight: 700;
+    font-size: 1.15rem;
+    letter-spacing: 0.5px;
+    transition: color 0.3s ease;
+}
+
+.yt-video-btn:hover .yt-btn-text {
+    color: #ff0000;
+}
+
 </style>
 
 
-<section class="fb-video-section" id="video-gallery">
-    <h2 class="fb-gallery-title">Video Gallery - Free Bikers Roma</h2>
-    
-    <div class="fb-video-wall video-gallery-container">
+
+<!-- Inizio Bottone Video YouTube -->
+
+<center>
+
+<a href="https://www.youtube.com/watch?v=QIhHzupvD_Y" target="_blank" class="yt-video-btn">
+    <div class="yt-thumbnail-container">
+        <!-- L'URL dell'immagine recupera in automatico la miniatura da YouTube -->
+        <img src="Video/tn_video.jpg" alt="Anteprima Video" class="yt-thumbnail">
         
-        <div class="fb-video-item" 
-             data-video-type="html5" 
-             data-video-url="https://sergioanello-del.github.io/Free_Bikers_Roma_22_febbraio/Video/Video01.mp4" 
-             data-width="300" 
-             data-height="600">
-            <img src="https://sergioanello-del.github.io/Free_Bikers_Roma_22_febbraio/Video/TN-video-01.png" alt="Video 1" class="fb-video-thumb">
-            <div class="fb-play-overlay">
-                <div class="fb-play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-            </div>
-            <div class="fb-video-info" style="position:absolute; bottom:10px; left:15px; color:#fff; font-weight:bold; text-shadow:1px 1px 3px #000;">On the Road</div>
+        <div class="yt-play-icon">
+            <!-- Icona Play in formato SVG (leggera e scalabile) -->
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
         </div>
-
-
-<!-- 
-        <div class="fb-video-item" 
-             data-video-type="html5" 
-             data-video-url="https://sergioanello-del.github.io/Free_Bikers_Roma_1_febbraio/VideoSermoneda/video02.mp4"
-             data-width="1280" 
-             data-height="720">
-            <img src="https://sergioanello-del.github.io/Free_Bikers_Roma_1_febbraio/VideoSermoneda/TN-video-02.jpg" alt="Video 2" class="fb-video-thumb">
-            <div class="fb-play-overlay">
-                <div class="fb-play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-            </div>
-            <div class="fb-video-info" style="position:absolute; bottom:10px; left:15px; color:#fff; font-weight:bold; text-shadow:1px 1px 3px #000;">Esposizione Presepe</div>
-        </div>
-
-        <div class="fb-video-item" 
-             data-video-type="html5" 
-             data-video-url="https://sergioanello-del.github.io/Free_Bikers_Roma_1_febbraio/VideoSermoneda/video04.mp4">
-            <img src="https://sergioanello-del.github.io/Free_Bikers_Roma_1_febbraio/VideoSermoneda/TN-video-04.jpg" alt="Video 4" class="fb-video-thumb">
-            <div class="fb-play-overlay">
-                <div class="fb-play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-            </div>
-            <div class="fb-video-info" style="position:absolute; bottom:10px; left:15px; color:#fff; font-weight:bold; text-shadow:1px 1px 3px #000;">Raduno</div>
-        </div> -->
-
     </div>
-</section>
+    <span class="yt-btn-text">Guarda il Video</span>
+</a>
 
-<div class="fb-modal-overlay" id="fbVideoModal">
-    <div class="fb-modal-content" id="fbModalContent">
-        <button class="fb-close-btn" id="fbCloseModal">&times;</button>
-        <div id="fbPlayerContainer"></div>
-    </div>
-</div>
+</center>
+<!-- Fine Bottone Video YouTube -->
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const modal = document.getElementById('fbVideoModal');
-        const modalContent = document.getElementById('fbModalContent');
-        const container = document.getElementById('fbPlayerContainer');
-        const closeBtn = document.getElementById('fbCloseModal');
-        const videoItems = document.querySelectorAll('.fb-video-item');
 
-        videoItems.forEach(item => {
-            item.addEventListener('click', function() {
-                const type = this.getAttribute('data-video-type');
-                const url = this.getAttribute('data-video-url');
-                const id = this.getAttribute('data-video-id');
-                
-                // Legge larghezza e altezza (default 16:9 se non specificati)
-                const vW = this.getAttribute('data-width') || 1280;
-                const vH = this.getAttribute('data-height') || 720;
-                const aspect = vW / vH;
 
-                // Applica le dimensioni al modal content
-                // Su desktop non supera i 1000px di larghezza o l'80% dell'altezza schermo
-                modalContent.style.maxWidth = vW + 'px';
-                modalContent.style.aspectRatio = aspect;
-
-                let playerHtml = '';
-                if (type === 'youtube') {
-                    playerHtml = `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1" allow="autoplay" allowfullscreen></iframe>`;
-                } else if (type === 'html5') {
-                    playerHtml = `<video controls autoplay playsinline><source src="${url}" type="video/mp4"></video>`;
-                }
-
-                container.innerHTML = playerHtml;
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            });
-        });
-
-        function closeModal() {
-            modal.classList.remove('active');
-            setTimeout(() => { container.innerHTML = ''; }, 400);
-            document.body.style.overflow = '';
-        }
-
-        closeBtn.addEventListener('click', closeModal);
-        modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
-        document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeModal(); });
-    });
-</script>
+<!-- fine video -->
 
 
 
 
-<!-- fine video gallery -->
 
 
 
@@ -1295,34 +1142,6 @@
                         <span class="text-amber-500 font-bold text-2xl italic">Rientro</span>
                     </div>
                 </div>
-
-                <!-- Punto 7 -->
-                <!-- <div class="timeline-item flex flex-col md:flex-row" data-aos="fade-right">
-                    <div class="timeline-dot"></div>
-                    <div class="pl-12 md:pl-0 md:w-1/2 md:pr-12 md:text-right mb-4 md:mb-0">
-                        <span class="text-amber-500 font-bold text-2xl italic">Rientro</span>
-                    </div>
-                    <div class="pl-12 md:pl-12 md:w-1/2">
-                        <div class="moto-card p-6 rounded-2xl">
-                            <h4 class="text-white font-bold text-lg mb-1"><i class="fas fa-road mr-2 text-amber-500"></i>Rientro Libero</h4>
-                            <!-- <p class="text-gray-300">Rifornimento a Colleferro, ENI accanto al bar Marini.</p> -->
-                        </div>
-                    </div>
-                </div> 
-
-                <!-- Punto 8 -->
-                <!-- <div class="timeline-item flex flex-col md:flex-row" data-aos="fade-left">
-                    <div class="timeline-dot"></div>
-                    <div class="pl-12 md:pl-0 md:w-1/2 md:pr-12 md:text-right mb-4 md:mb-0 order-2 md:order-1">
-                        <div class="moto-card p-6 rounded-2xl">
-                            <h4 class="text-white font-bold text-lg mb-1"><i class="fas fa-road mr-2 text-amber-500"></i>Rientro</h4>
-                            <p class="text-gray-300">Possibilità di rientrare utilizzando l'autostrada A1 da Colleferro o Valmontone.</p>
-                        </div>
-                    </div>
-                    <div class="pl-12 md:pl-12 md:w-1/2 order-1 md:order-2">
-                        <span class="text-amber-500 font-bold text-2xl italic">Rientro</span>
-                    </div>
-                </div> -->
 
             </div>
         </div>
