@@ -728,7 +728,7 @@
 (function() {
     const config = {
         basePath: 'Gallery/',
-        images: ["01.jpeg","02.jpeg","03.jpeg","04.jpeg","05.jpeg","06.jpeg","07.jpeg","08.jpeg","09.jpeg","10.jpeg","11.jpeg","12.jpeg","13.jpeg","14.jpeg","15.jpeg","16.jpeg","17.jpeg","18.jpeg","19.jpeg","20.jpeg","21.jpeg","22.jpeg","23.jpeg","24.jpeg","25.jpeg","26.jpeg","27.jpeg","28.jpeg","29.jpeg","30.jpeg","31.jpeg","32.jpeg","33.jpeg","34.jpeg","35.jpeg","36.jpeg","37.jpeg","38.jpeg","39.jpeg","40.jpeg","41.jpeg","42.jpeg","43.jpeg","44.jpeg","45.jpeg","45.jpeg","46.jpeg","47.jpeg","48.jpeg","49.jpeg","50.jpeg","51.jpeg","52.jpeg","53.jpeg","54.jpeg","55.jpeg","56.jpeg","57.jpeg","58.jpeg","59.jpeg","60.jpeg","61.jpeg","62.jpeg","63.jpeg","64.jpeg","65.jpeg","66.jpeg","67.jpeg","68.jpeg","69.jpeg"],
+        images: ["01.jpeg","02.jpeg","03.jpeg","04.jpeg","05.jpeg","06.jpeg","07.jpeg","08.jpeg","09.jpeg","10.jpeg","11.jpeg","12.jpeg","13.jpeg","14.jpeg","15.jpeg","16.jpeg","17.jpeg","18.jpeg","19.jpeg","20.jpeg","21.jpeg","22.jpeg","23.jpeg","24.jpeg","25.jpeg","26.jpeg","27.jpeg","28.jpeg","29.jpeg","30.jpeg","31.jpeg","32.jpeg","33.jpeg","34.jpeg","35.jpeg","36.jpeg","37.jpeg","38.jpeg","39.jpeg","40.jpeg","41.jpeg","42.jpeg","43.jpeg","44.jpeg","45.jpeg","45.jpeg","46.jpeg","47.jpeg","48.jpeg","49.jpeg","50.jpeg","51.jpeg","52.jpeg","53.jpeg","54.jpeg","55.jpeg"],
         speed: 0.6 // Velocità rallentata (era 1.2)
     };
 
@@ -874,141 +874,112 @@
 
 
 <!-- inizio video -->
-
-
 <style type="text/css">
-	/* Contenitore principale del link */
-.yt-video-btn {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    text-decoration: none;
-    gap: 15px;
-    font-family: sans-serif; /* Sostituisci con il font del tuo tema */
-    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-    max-width: 350px; /* Regola la larghezza in base alle tue esigenze */
-    margin: 20px auto;
-}
-
-/* Effetto di sollevamento generale al passaggio del mouse */
-.yt-video-btn:hover {
-    transform: translateY(-8px);
-}
-
-/* Contenitore della miniatura con angoli arrotondati e ombra */
-.yt-thumbnail-container {
+	/* --- Sezione con animazione di fondo --- */
+.video-promo-section {
     position: relative;
     width: 100%;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-    transition: box-shadow 0.4s ease;
-    background-color: #000;
-}
-
-/* Bagliore rosso stile YouTube all'hover */
-.yt-video-btn:hover .yt-thumbnail-container {
-    box-shadow: 0 15px 35px rgba(255, 0, 0, 0.3);
-}
-
-/* Immagine di anteprima */
-.yt-thumbnail {
-    width: 100%;
-    height: auto;
-    display: block;
-    transition: transform 0.6s ease, filter 0.4s ease;
-    filter: brightness(0.75); /* Leggermente scura per far risaltare il tasto play */
-}
-
-/* Zoom fluido e schiarimento all'hover */
-.yt-video-btn:hover .yt-thumbnail {
-    transform: scale(1.08);
-    filter: brightness(1);
-}
-
-/* Tasto Play centrale */
-.yt-play-icon {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 65px;
-    height: 65px;
-    background: rgba(255, 0, 0, 0.85);
-    border-radius: 50%;
+    /* Rende la sezione "stretta e lunga" (fascia orizzontale) */
+    padding: 60px 20px; 
+    /* Gradiente scuro/rosso in stile biker */
+    background: linear-gradient(45deg, #111111, #2b2b2b, #8b0000, #111111);
+    background-size: 400% 400%;
+    animation: gradientBG 12s ease infinite;
     display: flex;
     justify-content: center;
     align-items: center;
-    /* Animazione "battito" per ingaggiare l'utente */
-    animation: pulse-red 2s infinite;
-    transition: background 0.3s, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-align: center;
+    color: #ffffff;
+    overflow: hidden;
+    box-shadow: inset 0 0 30px rgba(0,0,0,0.8);
 }
 
-.yt-play-icon svg {
-    width: 30px;
-    height: 30px;
-    fill: white;
-    margin-left: 4px; /* Centra visivamente il triangolo */
+/* Keyframes per muovere il gradiente di sfondo */
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
-/* Effetto scatto del tasto play all'hover */
-.yt-video-btn:hover .yt-play-icon {
-    background: #ff0000;
-    transform: translate(-50%, -50%) scale(1.15);
-    animation: none; /* Disabilita il pulse all'hover */
-    box-shadow: 0 0 25px rgba(255, 0, 0, 0.9);
+.video-promo-content {
+    position: relative;
+    z-index: 2;
 }
 
-/* Keyframes per l'animazione pulsante */
-@keyframes pulse-red {
+.video-promo-content h2 {
+    font-size: 2.2rem;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+}
+
+.video-promo-content p {
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+    color: #cccccc;
+    font-style: italic;
+}
+
+/* --- Bottone animato --- */
+.animated-play-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #fff;
+    background-color: #e62429; /* Rosso acceso tipo YouTube */
+    border-radius: 50px;
+    text-decoration: none;
+    text-transform: uppercase;
+    box-shadow: 0 0 15px rgba(230, 36, 41, 0.6);
+    transition: all 0.3s ease;
+    /* Effetto pulsante per attirare i clic */
+    animation: pulseBtn 2s infinite; 
+}
+
+.animated-play-btn .play-icon {
+    margin-right: 8px;
+    font-size: 1.3rem;
+}
+
+/* Effetto Hover sul bottone */
+.animated-play-btn:hover {
+    background-color: #ff3b40;
+    color: #fff;
+    box-shadow: 0 0 25px rgba(255, 59, 64, 0.9);
+    transform: translateY(-3px) scale(1.05);
+    animation: none; /* Ferma il pulse quando l'utente ci passa sopra */
+}
+
+/* Keyframes per il bagliore pulsante del bottone */
+@keyframes pulseBtn {
     0% {
-        box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7);
+        box-shadow: 0 0 0 0 rgba(230, 36, 41, 0.7);
     }
     70% {
-        box-shadow: 0 0 0 20px rgba(255, 0, 0, 0);
+        box-shadow: 0 0 0 15px rgba(230, 36, 41, 0);
     }
     100% {
-        box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
+        box-shadow: 0 0 0 0 rgba(230, 36, 41, 0);
     }
-}
-
-/* Testo descrittivo sotto il bottone */
-.yt-btn-text {
-    color: #444; /* Usa un grigio chiaro come #ccc se il sito è in dark mode */
-    font-weight: 700;
-    font-size: 1.15rem;
-    letter-spacing: 0.5px;
-    transition: color 0.3s ease;
-}
-
-.yt-video-btn:hover .yt-btn-text {
-    color: #ff0000;
 }
 
 </style>
 
 
 
-<!-- Inizio Bottone Video YouTube -->
-
-<center>
-
-<a href="https://www.youtube.com/watch?v=QIhHzupvD_Y" target="_blank" class="yt-video-btn">
-	<span class="yt-btn-text">GUARDA IL VIDEO</span>
-    <div class="yt-thumbnail-container">
-        <!-- L'URL dell'immagine recupera in automatico la miniatura da YouTube -->
-        <img src="Video/tn_video.jpg" alt="Anteprima Video" class="yt-thumbnail">
-        
-        <div class="yt-play-icon">
-            <!-- Icona Play in formato SVG (leggera e scalabile) -->
-            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-        </div>
+<section class="video-promo-section">
+    <div class="video-promo-content">
+        <h2>Guarda il Video</h2>
+        <p>Vivi l'emozione della strada con i Free Bikers Roma</p>
+        <a href="URL_DEL_TUO_VIDEO_YOUTUBE" target="_blank" class="animated-play-btn">
+            <span class="play-icon">▶</span> GUARDA ORA il video
+        </a>
     </div>
-    
-</a>
-
-</center>
-<!-- Fine Bottone Video YouTube -->
+</section>
 
 
 
