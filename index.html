@@ -873,6 +873,15 @@
 
 
 
+
+
+
+
+
+
+
+
+
 <!-- inizio video -->
 <style type="text/css">
 /* --- Sezione contenitore con Effetto Parallax --- */
@@ -982,15 +991,155 @@
 
 
 
+<style type="text/css">
+	/* Overlay di sfondo della modale */
+.modal {
+    display: none; /* Nascosta di default */
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    align-items: center;
+    justify-content: center;
+}
+
+/* Contenitore del video */
+.modal-content {
+    position: relative;
+    width: 90%;
+    max-width: 800px;
+    background: #000;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    animation: fadeIn 0.3s ease-in-out; 
+}
+
+/* Rimuove lo spazio extra sotto il video e adatta i bordi */
+.modal-content video {
+    display: block;
+    border-radius: 8px;
+}
+
+/* Pulsante di chiusura (X) posizionato in alto a destra */
+.close-btn {
+    position: absolute;
+    top: -35px;
+    right: 0;
+    color: #fff;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.close-btn:hover {
+    color: #ccc;
+}
+
+/* Animazione fluida di apertura */
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+</style>
+
+
+
+
+<!-- <section class="video-promo-section">
+    <div class="video-promo-content">
+        <h2>Guarda il Video</h2>
+        <p>Vivi l'emozione della strada con i Free Bikers Roma</p>
+        <a href="https://www.youtube.com/shorts/OxHglUOPFXA" target="_blank" class="animated-play-btn">
+            <span class="play-icon">▶</span> GUARDA ORA il video
+        </a>
+    </div>
+</section> -->
+
+
+
 <section class="video-promo-section">
     <div class="video-promo-content">
         <h2>Guarda il Video</h2>
         <p>Vivi l'emozione della strada con i Free Bikers Roma</p>
-        <a href="https://youtube.com/shorts/OxHglUOPFXA" target="_blank" class="animated-play-btn">
+        <!-- Modificato: aggiunto id e rimosso target="_blank" -->
+        <a href="#" id="openVideoBtn" class="animated-play-btn" aria-haspopup="dialog">
             <span class="play-icon">▶</span> GUARDA ORA il video
         </a>
     </div>
 </section>
+
+<!-- Struttura della Modale Video -->
+<div id="videoModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-content">
+        <span class="close-btn" aria-label="Chiudi video">&times;</span>
+        <!-- Sostituisci il src con il percorso reale del tuo file .mp4 -->
+        <video id="promoVideo" controls width="100%">
+            <source src="Video/video01.mp4" type="video/mp4">
+            Il tuo browser non supporta il tag video.
+        </video>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+	document.addEventListener('DOMContentLoaded', function() {
+		const modal = document.getElementById('videoModal');
+		const btn = document.getElementById('openVideoBtn');
+		const closeBtn = document.querySelector('.close-btn');
+		const video = document.getElementById('promoVideo');
+
+		// Apri la modale e avvia il video
+		btn.addEventListener('click', function(e) {
+			e.preventDefault();
+			modal.style.display = 'flex'; // Mostra la modale centrando i contenuti
+			video.play(); // Fa partire il video in automatico
+		});
+
+		// Funzione centralizzata per chiudere la modale e fermare il video
+		function closeModal() {
+			modal.style.display = 'none';
+			video.pause();
+			video.currentTime = 0; // Riporta il video all'inizio
+		}
+
+		// Chiudi cliccando sulla "X"
+		closeBtn.addEventListener('click', closeModal);
+
+		// Chiudi cliccando fuori dal video (sull'overlay scuro)
+		window.addEventListener('click', function(event) {
+			if (event.target === modal) {
+				closeModal();
+			}
+		});
+		
+		// Chiudi premendo il tasto ESC (standard di accessibilità)
+		window.addEventListener('keydown', function(event) {
+			if (event.key === 'Escape' && modal.style.display === 'flex') {
+				closeModal();
+			}
+		});
+	});
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 <!-- fine video -->
